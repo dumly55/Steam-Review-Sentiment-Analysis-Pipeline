@@ -1,0 +1,9 @@
+[project]
+name = "steam-review-sentiment-analysis-pipeline"
+version = "0.0.1"
+description = "LLM-powered sentiment analysis of Steam reviews and comments for each game update."
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

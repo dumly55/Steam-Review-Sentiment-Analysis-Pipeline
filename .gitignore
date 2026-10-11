@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+*.egg-info/
+
+# Secrets and local config
+.env
+
+# Local data and dumps
+data/
+*.csv
+*.json.gz
+
+# Power BI local cache
+*.pbix.bak
+.pbi/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
