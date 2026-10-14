@@ -2,7 +2,7 @@
 
 **LLM-powered player feedback analytics for Steam game updates.** Python ETL · PostgreSQL · SQL · local NLP with Ollama · Streamlit · Power BI
 
-> **Status: v0 scaffold.** This is only the project skeleton. Nothing collects data, runs AI, or produces findings yet.
+> **Status: Phase 1 (setup and source checks).** The three Steam sources have been verified live, but nothing is stored or analyzed yet and there are no findings. See [docs/source_findings.md](docs/source_findings.md) for what was verified.
 
 ## What it will do
 
@@ -29,18 +29,29 @@ No paid AI APIs. Everything runs locally.
 ## Project layout
 
 ```
-steam_analyzer/   Python package (config, app; collectors and pipeline to come)
+steam_analyzer/   Python package: config, HTTP retries, Steam sources, preflight, smoke check, Streamlit app
 sql/              PostgreSQL schema and, later, reporting views
-tests/            pytest tests
+tests/            pytest tests (fixtures are labeled synthetic)
+docs/             Verified source findings
 ```
 
 ## Setup (Windows)
 
+Requires Python 3.12 from python.org, PostgreSQL 17 and Ollama.
+
 ```powershell
-python -m venv .venv
+py -3.12 -m venv .venv
 .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-copy .env.example .env      # then edit values
+copy .env.example .env          # then set your postgres password
+ollama pull qwen3:8b
+```
+
+## Commands
+
+```powershell
+python -m steam_analyzer preflight   # PostgreSQL, Ollama model, GPU
+python -m steam_analyzer smoke       # small live check of Steam reviews, release events and comments
 pytest
 streamlit run steam_analyzer/app.py
 ```
