@@ -45,3 +45,16 @@ This endpoint is undocumented, but it is what the Steam store's own news page us
 - Throughput is about 80 output tokens/s. A short classification takes about 2.5 s warm; the first call takes about 48 s while the model loads.
 - `"think": false` and `format=<JSON schema>` produce valid schema-shaped JSON.
 - ⚠️ **Not deterministic**: the same review got `mixed` on one run and `negative` on the next, even at temperature 0. Pin `seed`, cache results per input version, and validate outputs.
+
+## Release catalog (Phase 2)
+
+Checked on the full history (168 announcements, 2023-09-22 to 2026-10-29) on **2026-11-02**. A trimmed real snapshot is in `tests/fixtures/helldivers2_events_2026-11-02.json`.
+
+- **95 releases and 72 other announcements.** All 96 update-type events (12/13/14) are real patches; one is a duplicate post.
+- The news API's announcement count (168) matched the events feed (168), so the count works as a coverage cross-check.
+- **Store page links need the event gid**: `store.steampowered.com/news/app/553850/view/<event gid>`. The announcement gid opens a generic news hub. Community links (`/announcements/detail/<announcement gid>`) take the announcement gid.
+- Version strings are unreliable as identifiers. "01.002.203" titles two releases four months apart, and "HOT FIX 01.001.001" follows 1.001.100.
+- "Into the Unjust - Out Now!" (type 14, no version) is the only post for that release, so version-less release posts cannot simply be dropped.
+- **Late patch-note edits are common.** 35 of the 96 release posts were edited after posting, and 4 were edited after the next release shipped (e.g. 4.1.2 after 5.0.0). 7.0.0 was edited three weeks after release.
+- `rtime32_start_time` differs from the post time by more than 5 minutes on 3 release posts, by up to 135 minutes (6.3.0). Neither is documented as the moment the patch went live; the post time is used and labeled, and `config/release_overrides.json` takes corrections.
+- PostgreSQL returns `timestamptz` values in the session's local time zone. All display code converts to UTC explicitly.

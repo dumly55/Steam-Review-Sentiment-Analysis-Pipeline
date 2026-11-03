@@ -2,22 +2,12 @@
 
 import psycopg
 import pytest
+from db_helpers import DATABASE_URL, postgres_reachable
 
-from steam_analyzer.config import load_settings
 from steam_analyzer.db import init_db
 
-DATABASE_URL = load_settings().database_url
 
-
-def _postgres_reachable() -> bool:
-    try:
-        psycopg.connect(DATABASE_URL, connect_timeout=3).close()
-        return True
-    except psycopg.Error:
-        return False
-
-
-@pytest.mark.skipif(not _postgres_reachable(), reason="local PostgreSQL not reachable")
+@pytest.mark.skipif(not postgres_reachable(), reason="local PostgreSQL not reachable")
 def test_init_db_is_idempotent():
     init_db(DATABASE_URL)
     assert init_db(DATABASE_URL) is False  # second run does not recreate the database

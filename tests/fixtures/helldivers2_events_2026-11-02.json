@@ -1,0 +1,2189 @@
+{
+ "_note": "REAL snapshot of Helldivers 2 (app 553850) announcement event metadata, captured 2026-11-02 from Steam's public events feed. Titles, types, IDs and timestamps only; no patch-note text.",
+ "events": [
+  {
+   "gid": "3737481075243979973",
+   "event_type": 28,
+   "event_name": "HELLDIVERS™ 2 launches 8th February 2024!",
+   "rtime32_start_time": 1695377760,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "3737481075243979974",
+    "posttime": 1695377762,
+    "updatetime": 1696531893,
+    "forum_topic_id": "3887225762854148585"
+   }
+  },
+  {
+   "gid": "3747617344193386390",
+   "event_type": 28,
+   "event_name": "Wishing you all a happy Liberty Day!",
+   "rtime32_start_time": 1698332400,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "3747617344193386391",
+    "posttime": 1698332422,
+    "updatetime": 1698355098,
+    "forum_topic_id": "3873718133744144504"
+   }
+  },
+  {
+   "gid": "3906374309655891718",
+   "event_type": 28,
+   "event_name": "HELLDIVERS™ 2 PC SPECIFICATIONS AND CROSSPLAY SUPPORT CONFIRMED!",
+   "rtime32_start_time": 1704817920,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "3906374309655891719",
+    "posttime": 1704816292,
+    "updatetime": 1704820289,
+    "forum_topic_id": "4038106323499109670"
+   }
+  },
+  {
+   "gid": "6770665671992093485",
+   "event_type": 28,
+   "event_name": "HELLDIVERS™2 Has Gone Gold!",
+   "rtime32_start_time": 1705428120,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "6770665671992093486",
+    "posttime": 1705428129,
+    "updatetime": 1705428129,
+    "forum_topic_id": "6273018183381673014"
+   }
+  },
+  {
+   "gid": "3948035142434652631",
+   "event_type": 28,
+   "event_name": "Helldivers 2: Join the Galactic War",
+   "rtime32_start_time": 1706026920,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "3948035142434652632",
+    "posttime": 1706026923,
+    "updatetime": 1706026923,
+    "forum_topic_id": "4130431471925524466"
+   }
+  },
+  {
+   "gid": "3964924274929744964",
+   "event_type": 28,
+   "event_name": "WARBONDS: Supporting the Galactic War Effort",
+   "rtime32_start_time": 1706632500,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "3964924274929744965",
+    "posttime": 1706632559,
+    "updatetime": 1706632559,
+    "forum_topic_id": "4142816945494576800"
+   }
+  },
+  {
+   "gid": "4022345969718974733",
+   "event_type": 28,
+   "event_name": "HELLDIVERS 2: The Story So Far",
+   "rtime32_start_time": 1707247800,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4022345969718974734",
+    "posttime": 1707237585,
+    "updatetime": 1707247812,
+    "forum_topic_id": "4206993868016610733"
+   }
+  },
+  {
+   "gid": "4022346438959688223",
+   "event_type": 12,
+   "event_name": "01.000.004",
+   "rtime32_start_time": 1707512181,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4022346438959688224",
+    "posttime": 1707512181,
+    "updatetime": 1707512181,
+    "forum_topic_id": "4206994256762664531"
+   }
+  },
+  {
+   "gid": "4022346438967281357",
+   "event_type": 28,
+   "event_name": "[12 Feb 2024] Server Update",
+   "rtime32_start_time": 1707694920,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4022346438967281358",
+    "posttime": 1707694978,
+    "updatetime": 1707694978,
+    "forum_topic_id": "4206994473250652704"
+   }
+  },
+  {
+   "gid": "4022346438970380903",
+   "event_type": 12,
+   "event_name": "Patch 01.000.005",
+   "rtime32_start_time": 1707767880,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4022346438970380904",
+    "posttime": 1707767928,
+    "updatetime": 1707767928,
+    "forum_topic_id": "4206994473253742107"
+   }
+  },
+  {
+   "gid": "4182224859040174774",
+   "event_type": 12,
+   "event_name": "Patch 01.000.006",
+   "rtime32_start_time": 1707899764,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4182224859040174775",
+    "posttime": 1707899764,
+    "updatetime": 1707899764,
+    "forum_topic_id": "4372501943308127074"
+   }
+  },
+  {
+   "gid": "7862791756727695286",
+   "event_type": 12,
+   "event_name": "🛠️ PATCH 01.000.007 (PC & PS5) ⚙️",
+   "rtime32_start_time": 1707987681,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "7862791756727695287",
+    "posttime": 1707987681,
+    "updatetime": 1707987681,
+    "forum_topic_id": "7599331177360562860"
+   }
+  },
+  {
+   "gid": "7862791756731309004",
+   "event_type": 12,
+   "event_name": "🛠️ PATCH 01.000.008 ⚙️",
+   "rtime32_start_time": 1708074091,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "7862791756731309005",
+    "posttime": 1708074091,
+    "updatetime": 1708074091,
+    "forum_topic_id": "7599331177364227328"
+   }
+  },
+  {
+   "gid": "7862791756735138822",
+   "event_type": 12,
+   "event_name": "🛠️ PATCH 01.000.009",
+   "rtime32_start_time": 1708165620,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "7862791756735138823",
+    "posttime": 1708165669,
+    "updatetime": 1708165826,
+    "forum_topic_id": "7599331177368118525"
+   }
+  },
+  {
+   "gid": "7862791756747273256",
+   "event_type": 12,
+   "event_name": "🛠️ PATCH 1.000.10 (PC) ⚙️",
+   "rtime32_start_time": 1708455824,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "7862791756747273257",
+    "posttime": 1708455824,
+    "updatetime": 1708455824,
+    "forum_topic_id": "7599331480048065368"
+   }
+  },
+  {
+   "gid": "4192358592269013041",
+   "event_type": 12,
+   "event_name": "🛠️ PATCH 1.000.11 ⚙️",
+   "rtime32_start_time": 1708596111,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4192358592269013042",
+    "posttime": 1708596111,
+    "updatetime": 1708596111,
+    "forum_topic_id": "4339851480052888506"
+   }
+  },
+  {
+   "gid": "4192358592272626253",
+   "event_type": 12,
+   "event_name": "🛠️ PATCH 1.000.12 ⚙️",
+   "rtime32_start_time": 1708682460,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4192358592272626254",
+    "posttime": 1708682515,
+    "updatetime": 1709147263,
+    "forum_topic_id": "4339851480056556393"
+   }
+  },
+  {
+   "gid": "4143945532191549649",
+   "event_type": 12,
+   "event_name": "🛠️ PATCH 1.000.13 ⚙️",
+   "rtime32_start_time": 1709114520,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4143945532191549650",
+    "posttime": 1709114577,
+    "updatetime": 1709311300,
+    "forum_topic_id": "4302697419061619686"
+   }
+  },
+  {
+   "gid": "4113546867235200192",
+   "event_type": 12,
+   "event_name": "Minor Patch 01.000.100",
+   "rtime32_start_time": 1709720040,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4113546867235200193",
+    "posttime": 1709720080,
+    "updatetime": 1709936007,
+    "forum_topic_id": "4298194451986767782"
+   }
+  },
+  {
+   "gid": "4113546867237761806",
+   "event_type": 28,
+   "event_name": "HELLDIVERS 2: New Warbond Inbound!",
+   "rtime32_start_time": 1709821800,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4113546867237761807",
+    "posttime": 1709822133,
+    "updatetime": 1709937922,
+    "forum_topic_id": "4298194451991124059"
+   }
+  },
+  {
+   "gid": "4113546867256852245",
+   "event_type": 12,
+   "event_name": "Patch 1.000.102",
+   "rtime32_start_time": 1710237780,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4113546867256852246",
+    "posttime": 1710237827,
+    "updatetime": 1710242501,
+    "forum_topic_id": "4298195009695431000"
+   }
+  },
+  {
+   "gid": "4141695629538335799",
+   "event_type": 12,
+   "event_name": "PATCH 1.000.103",
+   "rtime32_start_time": 1710929255,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4141695629538335800",
+    "posttime": 1710929255,
+    "updatetime": 1710929255,
+    "forum_topic_id": "4295943916778939087"
+   }
+  },
+  {
+   "gid": "4141695629560003238",
+   "event_type": 12,
+   "event_name": "PATCH 1.000.104",
+   "rtime32_start_time": 1711447354,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4141695629560003239",
+    "posttime": 1711447354,
+    "updatetime": 1711447354,
+    "forum_topic_id": "4295944344106669910"
+   }
+  },
+  {
+   "gid": "4204746659280937639",
+   "event_type": 13,
+   "event_name": "PATCH 01.000.200",
+   "rtime32_start_time": 1712048460,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4204746659280937640",
+    "posttime": 1712048464,
+    "updatetime": 1712165367,
+    "forum_topic_id": "4358995462056461588"
+   }
+  },
+  {
+   "gid": "4176599795009919484",
+   "event_type": 12,
+   "event_name": "PATCH 01.000.201",
+   "rtime32_start_time": 1712134927,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4176599795009919485",
+    "posttime": 1712134927,
+    "updatetime": 1712134927,
+    "forum_topic_id": "4361247379737371534"
+   }
+  },
+  {
+   "gid": "4176599795011036515",
+   "event_type": 28,
+   "event_name": "HELLDIVERS 2: Explosive New Warbond!",
+   "rtime32_start_time": 1712248860,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4176599795011036516",
+    "posttime": 1712248874,
+    "updatetime": 1712248874,
+    "forum_topic_id": "4361247379742210506"
+   }
+  },
+  {
+   "gid": "4176599795031597490",
+   "event_type": 12,
+   "event_name": "Patch 01.000.202",
+   "rtime32_start_time": 1712653260,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4176599795031597491",
+    "posttime": 1712653312,
+    "updatetime": 1712665203,
+    "forum_topic_id": "4361247820937203685"
+   }
+  },
+  {
+   "gid": "7974260991426339747",
+   "event_type": 12,
+   "event_name": "PATCH 01.000.203",
+   "rtime32_start_time": 1713258000,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "7974260991426339748",
+    "posttime": 1713258041,
+    "updatetime": 1713258041,
+    "forum_topic_id": "6690735450899995470"
+   }
+  },
+  {
+   "gid": "4169846298204053636",
+   "event_type": 13,
+   "event_name": "Patch 01.000.300",
+   "rtime32_start_time": 1714381200,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4169846298204053637",
+    "posttime": 1714381228,
+    "updatetime": 1714381424,
+    "forum_topic_id": "4358997834041119838"
+   }
+  },
+  {
+   "gid": "4196868529804260414",
+   "event_type": 12,
+   "event_name": "Patch 1.000.301",
+   "rtime32_start_time": 1714640400,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4196868529804260415",
+    "posttime": 1714640436,
+    "updatetime": 1714640436,
+    "forum_topic_id": "4357872216491256822"
+   }
+  },
+  {
+   "gid": "4169846298219822015",
+   "event_type": 28,
+   "event_name": "Thrill and chill with the new HELLDIVERS 2 Warbond",
+   "rtime32_start_time": 1714653000,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4169846298219822016",
+    "posttime": 1714653000,
+    "updatetime": 1714653000,
+    "forum_topic_id": "4357872216491791708"
+   }
+  },
+  {
+   "gid": "4196868529806518741",
+   "event_type": 28,
+   "event_name": "HELLDIVERS™ 2 Account Linking Update",
+   "rtime32_start_time": 1714696380,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4196868529806518742",
+    "posttime": 1714696392,
+    "updatetime": 1715269629,
+    "forum_topic_id": "4357872384977255720"
+   }
+  },
+  {
+   "gid": "4196868529822134078",
+   "event_type": 13,
+   "event_name": "Patch 1.000.302",
+   "rtime32_start_time": 1715072460,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4196868529822134079",
+    "posttime": 1715072463,
+    "updatetime": 1715088188,
+    "forum_topic_id": "4357872738331208477"
+   }
+  },
+  {
+   "gid": "4197995070213101162",
+   "event_type": 12,
+   "event_name": "Patch 1.000.303",
+   "rtime32_start_time": 1715158800,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4197995070213101163",
+    "posttime": 1715158828,
+    "updatetime": 1715158856,
+    "forum_topic_id": "4358998752030659211"
+   }
+  },
+  {
+   "gid": "4197995070234810124",
+   "event_type": 12,
+   "event_name": "Patch 1.000.304",
+   "rtime32_start_time": 1715677200,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4197995070234810125",
+    "posttime": 1715677239,
+    "updatetime": 1715677239,
+    "forum_topic_id": "4358999171576184817"
+   }
+  },
+  {
+   "gid": "4142827871720438263",
+   "event_type": 12,
+   "event_name": "🛠️ PATCH 1.000.305 ⚙️",
+   "rtime32_start_time": 1717229020,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4142827871720438264",
+    "posttime": 1717229020,
+    "updatetime": 1717229020,
+    "forum_topic_id": "4327475744613381569"
+   }
+  },
+  {
+   "gid": "4150709804556253866",
+   "event_type": 28,
+   "event_name": "The Viper Commandos run through the jungle on June 13!",
+   "rtime32_start_time": 1717676100,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4150709804556253867",
+    "posttime": 1717676134,
+    "updatetime": 1717676134,
+    "forum_topic_id": "4336483289195396500"
+   }
+  },
+  {
+   "gid": "4150709804553746157",
+   "event_type": 13,
+   "event_name": "PATCH 01.000.400",
+   "rtime32_start_time": 1718269200,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4150709804553746158",
+    "posttime": 1718269233,
+    "updatetime": 1718269233,
+    "forum_topic_id": "6171700864782683173"
+   }
+  },
+  {
+   "gid": "5998312279129319530",
+   "event_type": 28,
+   "event_name": "PATCH 1.000.400 explained",
+   "rtime32_start_time": 1718269200,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "5998312279129319531",
+    "posttime": 1718269244,
+    "updatetime": 1718269244,
+    "forum_topic_id": "6171700864782683643"
+   }
+  },
+  {
+   "gid": "5998312279144802694",
+   "event_type": 12,
+   "event_name": "Patch 1.000.402",
+   "rtime32_start_time": 1718701200,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "5998312279144802695",
+    "posttime": 1718701231,
+    "updatetime": 1718701231,
+    "forum_topic_id": "6171701314138537559"
+   }
+  },
+  {
+   "gid": "4183362170410922203",
+   "event_type": 12,
+   "event_name": "Patch 01.000.403",
+   "rtime32_start_time": 1719306000,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4183362170410922204",
+    "posttime": 1719306054,
+    "updatetime": 1719306054,
+    "forum_topic_id": "4353373595125957539"
+   }
+  },
+  {
+   "gid": "4183362170401345632",
+   "event_type": 28,
+   "event_name": "Community Update: June 2024",
+   "rtime32_start_time": 1719342060,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4183362170401345633",
+    "posttime": 1719342097,
+    "updatetime": 1720659030,
+    "forum_topic_id": "4353373595127488901"
+   }
+  },
+  {
+   "gid": "4246413199434585562",
+   "event_type": 12,
+   "event_name": "Patch 01.000.404",
+   "rtime32_start_time": 1720086900,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4246413199434585563",
+    "posttime": 1720086950,
+    "updatetime": 1720086950,
+    "forum_topic_id": "4416424806090402666"
+   }
+  },
+  {
+   "gid": "4246413199456152345",
+   "event_type": 12,
+   "event_name": "PATCH 1.000.405",
+   "rtime32_start_time": 1720602780,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4246413199456152346",
+    "posttime": 1720602787,
+    "updatetime": 1720602787,
+    "forum_topic_id": "4416425392679800148"
+   }
+  },
+  {
+   "gid": "4329731868526349727",
+   "event_type": 28,
+   "event_name": "Unleash more Liberty with Helldivers 2: Escalation of Freedom",
+   "rtime32_start_time": 1721740200,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4329731868526349728",
+    "posttime": 1721740207,
+    "updatetime": 1721740207,
+    "forum_topic_id": "4514379761465243171"
+   }
+  },
+  {
+   "gid": "4339865428697564653",
+   "event_type": 28,
+   "event_name": "Let the flames of freedom burn bright with new Helldivers 2 Warbond on 8 August.",
+   "rtime32_start_time": 1722345000,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4339865428697564654",
+    "posttime": 1722345057,
+    "updatetime": 1722345057,
+    "forum_topic_id": "4521135854308336083"
+   }
+  },
+  {
+   "gid": "4339865428700306191",
+   "event_type": 28,
+   "event_name": "Community Update: July 2024",
+   "rtime32_start_time": 1722517200,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4339865428700306192",
+    "posttime": 1722517250,
+    "updatetime": 1723139115,
+    "forum_topic_id": "4521135947673921781"
+   }
+  },
+  {
+   "gid": "4339865428685122196",
+   "event_type": 11,
+   "event_name": "Escalation of Freedom Livestream Event",
+   "rtime32_start_time": 1722934800,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4339865428685122197",
+    "posttime": 1722862862,
+    "updatetime": 1722972109,
+    "forum_topic_id": "4521136333470303191"
+   }
+  },
+  {
+   "gid": "4339865428695343823",
+   "event_type": 14,
+   "event_name": "Patch 1.001.002 Escalation of Freedom",
+   "rtime32_start_time": 1722934800,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4339865428695343824",
+    "posttime": 1722934825,
+    "updatetime": 1722952074,
+    "forum_topic_id": "4521136490641200097"
+   }
+  },
+  {
+   "gid": "4339866062688017482",
+   "event_type": 28,
+   "event_name": "PATCH 1.001.002 explained",
+   "rtime32_start_time": 1722976140,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4339866062688017483",
+    "posttime": 1722976183,
+    "updatetime": 1722976183,
+    "forum_topic_id": "4521136490642961414"
+   }
+  },
+  {
+   "gid": "4339866697735881047",
+   "event_type": 12,
+   "event_name": "Patch 01.001.003",
+   "rtime32_start_time": 1723548600,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4339866697735881048",
+    "posttime": 1723548659,
+    "updatetime": 1723548659,
+    "forum_topic_id": "4521137097811179404"
+   }
+  },
+  {
+   "gid": "4339866697736692015",
+   "event_type": 28,
+   "event_name": "A message to the community from our game director",
+   "rtime32_start_time": 1723566960,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4339866697736692016",
+    "posttime": 1723566980,
+    "updatetime": 1723566980,
+    "forum_topic_id": "4521137097811960903"
+   }
+  },
+  {
+   "gid": "6992487606095723693",
+   "event_type": 12,
+   "event_name": "PATCH 01.001.004",
+   "rtime32_start_time": 1724144460,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "6992487606095723694",
+    "posttime": 1724144466,
+    "updatetime": 1724145110,
+    "forum_topic_id": "6324829427686347838"
+   }
+  },
+  {
+   "gid": "4252047773008305837",
+   "event_type": 12,
+   "event_name": "Patch 1.001.005 Emergency Hot Fix",
+   "rtime32_start_time": 1724239860,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4252047773008305838",
+    "posttime": 1724239882,
+    "updatetime": 1724239882,
+    "forum_topic_id": "4433317658008403582"
+   }
+  },
+  {
+   "gid": "4613462911400573371",
+   "event_type": 28,
+   "event_name": "60 Day Timeline - Progress Update",
+   "rtime32_start_time": 1725541260,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4613462911400573372",
+    "posttime": 1725541306,
+    "updatetime": 1725541306,
+    "forum_topic_id": "4762081699107061264"
+   }
+  },
+  {
+   "gid": "4590945546838299705",
+   "event_type": 28,
+   "event_name": "The Chemical Agents Warbond is coming to Helldivers 2!",
+   "rtime32_start_time": 1726146900,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4590945546838299706",
+    "posttime": 1726146927,
+    "updatetime": 1726657902,
+    "forum_topic_id": "4757578733053474776"
+   }
+  },
+  {
+   "gid": "7147864422081646859",
+   "event_type": 13,
+   "event_name": "Patch 1.001.100",
+   "rtime32_start_time": 1726563600,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "7147864422081646860",
+    "posttime": 1726563637,
+    "updatetime": 1726578142,
+    "forum_topic_id": "6655846466490872829"
+   }
+  },
+  {
+   "gid": "4679892274002466936",
+   "event_type": 12,
+   "event_name": "HOT FIX 01.001.001",
+   "rtime32_start_time": 1726667100,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4679892274002466937",
+    "posttime": 1726667123,
+    "updatetime": 1726667123,
+    "forum_topic_id": "4843147760495764201"
+   }
+  },
+  {
+   "gid": "4679892274020252124",
+   "event_type": 12,
+   "event_name": "Patch 1.001.102",
+   "rtime32_start_time": 1727168400,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4679892274020252125",
+    "posttime": 1727168435,
+    "updatetime": 1727170228,
+    "forum_topic_id": "4843148117776544120"
+   }
+  },
+  {
+   "gid": "4677641107705631269",
+   "event_type": 12,
+   "event_name": "Patch 1.001.103",
+   "rtime32_start_time": 1727773440,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4677641107705631270",
+    "posttime": 1727773485,
+    "updatetime": 1727773485,
+    "forum_topic_id": "4840897142196729678"
+   }
+  },
+  {
+   "gid": "7291982050853715743",
+   "event_type": 13,
+   "event_name": "Patch 01.001.104",
+   "rtime32_start_time": 1728982800,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "7291982050853715744",
+    "posttime": 1728982835,
+    "updatetime": 1728991656,
+    "forum_topic_id": "4700160821460015649"
+   }
+  },
+  {
+   "gid": "4551541857552166131",
+   "event_type": 28,
+   "event_name": "60 Day Timeline Conclusion Update",
+   "rtime32_start_time": 1728982980,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4551541857552166132",
+    "posttime": 1728983035,
+    "updatetime": 1728983035,
+    "forum_topic_id": "4700160821460024086"
+   }
+  },
+  {
+   "gid": "4550416955418345551",
+   "event_type": 28,
+   "event_name": "Helldivers 2 is launching Truth Enforcers Warbond on October 31st!",
+   "rtime32_start_time": 1729774860,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4550416955418345552",
+    "posttime": 1729774892,
+    "updatetime": 1729774892,
+    "forum_topic_id": "4697909843220048940"
+   }
+  },
+  {
+   "gid": "4550416955418345496",
+   "event_type": 13,
+   "event_name": "Patch 01.001.201",
+   "rtime32_start_time": 1730196000,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4550416955418345497",
+    "posttime": 1730196044,
+    "updatetime": 1730196044,
+    "forum_topic_id": "4697910365481117911"
+   }
+  },
+  {
+   "gid": "4443457098120954142",
+   "event_type": 12,
+   "event_name": "Patch 1.001.202",
+   "rtime32_start_time": 1730800800,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4443457098120954143",
+    "posttime": 1730800828,
+    "updatetime": 1730800828,
+    "forum_topic_id": "4635986512580739894"
+   }
+  },
+  {
+   "gid": "4445709535659688161",
+   "event_type": 12,
+   "event_name": "Hotfix 01.001.203",
+   "rtime32_start_time": 1731405660,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "4445709535659688162",
+    "posttime": 1731405677,
+    "updatetime": 1731405677,
+    "forum_topic_id": "4630357671395998087"
+   }
+  },
+  {
+   "gid": "603016424736161843",
+   "event_type": 28,
+   "event_name": "Visit the Game Awards on Steam to unlock the TR-117 Alpha Commander armor early!",
+   "rtime32_start_time": 1734028080,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "603016424736161844",
+    "posttime": 1734028133,
+    "updatetime": 1736533243,
+    "forum_topic_id": "787664008885864496"
+   }
+  },
+  {
+   "gid": "501684880435839706",
+   "event_type": 14,
+   "event_name": "PATCH 01.002.001",
+   "rtime32_start_time": 1734056400,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "501684880435839707",
+    "posttime": 1734056423,
+    "updatetime": 1734056423,
+    "forum_topic_id": "787664008885886450"
+   }
+  },
+  {
+   "gid": "525329231236825131",
+   "event_type": 28,
+   "event_name": "Helldivers, join the fight against the Omens of Tyranny!",
+   "rtime32_start_time": 1734056520,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "525329231236825132",
+    "posttime": 1734056554,
+    "updatetime": 1734060288,
+    "forum_topic_id": "787664008885886534"
+   }
+  },
+  {
+   "gid": "525329231236825115",
+   "event_type": 28,
+   "event_name": "New Warbond dropping into HELLDIVERS 2 today!",
+   "rtime32_start_time": 1734084060,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "525329231236825116",
+    "posttime": 1734084082,
+    "updatetime": 1734084313,
+    "forum_topic_id": "787664130474509284"
+   }
+  },
+  {
+   "gid": "603016424736163012",
+   "event_type": 12,
+   "event_name": "PATCH 01.002.002",
+   "rtime32_start_time": 1734429600,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "603016424736163013",
+    "posttime": 1734429635,
+    "updatetime": 1734429635,
+    "forum_topic_id": "787664386892295818"
+   }
+  },
+  {
+   "gid": "516322672418750479",
+   "event_type": 12,
+   "event_name": "PATCH 01.002.203",
+   "rtime32_start_time": 1734516000,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516322672418750480",
+    "posttime": 1734516046,
+    "updatetime": 1734516046,
+    "forum_topic_id": "591757960657520923"
+   }
+  },
+  {
+   "gid": "516322672418750491",
+   "event_type": 28,
+   "event_name": "Helldivers 2 x Killzone",
+   "rtime32_start_time": 1734516540,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516322672418750492",
+    "posttime": 1734516591,
+    "updatetime": 1734516591,
+    "forum_topic_id": "591757960657521281"
+   }
+  },
+  {
+   "gid": "516322672418750732",
+   "event_type": 28,
+   "event_name": "A Helldivers x Killzone Update: Season's Greetings",
+   "rtime32_start_time": 1734621360,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516322672418750733",
+    "posttime": 1734621412,
+    "updatetime": 1734621412,
+    "forum_topic_id": "591757960657596977"
+   }
+  },
+  {
+   "gid": "505065569774469741",
+   "event_type": 12,
+   "event_name": "PATCH 01.002.005",
+   "rtime32_start_time": 1736848800,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "505065569774469742",
+    "posttime": 1736848871,
+    "updatetime": 1736849020,
+    "forum_topic_id": "600767526707726170"
+   }
+  },
+  {
+   "gid": "505067472486924551",
+   "event_type": 13,
+   "event_name": "PATCH 01.002.101",
+   "rtime32_start_time": 1738663200,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "505067472486924552",
+    "posttime": 1738663245,
+    "updatetime": 1738663245,
+    "forum_topic_id": "600769531494801921"
+   }
+  },
+  {
+   "gid": "505067472486927858",
+   "event_type": 28,
+   "event_name": "Super Earth calls for devotees with the latest Warbond: Servants of Freedom!",
+   "rtime32_start_time": 1738674660,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "505067472486927859",
+    "posttime": 1738674706,
+    "updatetime": 1738674706,
+    "forum_topic_id": "600769531494810021"
+   }
+  },
+  {
+   "gid": "505068648713420813",
+   "event_type": 12,
+   "event_name": "PATCH 01.002.103",
+   "rtime32_start_time": 1739268000,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "505068648713420814",
+    "posttime": 1739268024,
+    "updatetime": 1739268024,
+    "forum_topic_id": "600770111531432461"
+   }
+  },
+  {
+   "gid": "526460839277887520",
+   "event_type": 12,
+   "event_name": "PATCH 01.002.104",
+   "rtime32_start_time": 1739363400,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "526460839277887521",
+    "posttime": 1739363449,
+    "updatetime": 1739363449,
+    "forum_topic_id": "592888933793165616"
+   }
+  },
+  {
+   "gid": "670576294037029271",
+   "event_type": 12,
+   "event_name": "01.002.105",
+   "rtime32_start_time": 1739872800,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "670576294037029272",
+    "posttime": 1739872833,
+    "updatetime": 1739872833,
+    "forum_topic_id": "632296007418252965"
+   }
+  },
+  {
+   "gid": "503943474819629068",
+   "event_type": 12,
+   "event_name": "PATCH 01.002.106",
+   "rtime32_start_time": 1739970000,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "503943474819629069",
+    "posttime": 1739970030,
+    "updatetime": 1739970030,
+    "forum_topic_id": "599644966903375278"
+   }
+  },
+  {
+   "gid": "578254855150240184",
+   "event_type": 13,
+   "event_name": "Patch Notes 01.002.200",
+   "rtime32_start_time": 1742292000,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "578254855150240185",
+    "posttime": 1742292043,
+    "updatetime": 1742292043,
+    "forum_topic_id": "612032279991078156"
+   }
+  },
+  {
+   "gid": "578254855150240941",
+   "event_type": 28,
+   "event_name": "It’s high noon in Helldivers 2 with the new Borderline Justice Warbond!",
+   "rtime32_start_time": 1742293380,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "578254855150240942",
+    "posttime": 1742293423,
+    "updatetime": 1742293423,
+    "forum_topic_id": "612032279991079320"
+   }
+  },
+  {
+   "gid": "516331088340058499",
+   "event_type": 12,
+   "event_name": "PATCH 01.002.201",
+   "rtime32_start_time": 1742896800,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516331088340058500",
+    "posttime": 1742896838,
+    "updatetime": 1742896838,
+    "forum_topic_id": "591766704612242207"
+   }
+  },
+  {
+   "gid": "516331541072185173",
+   "event_type": 12,
+   "event_name": "PATCH 01.002.202",
+   "rtime32_start_time": 1743498000,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516331541072185174",
+    "posttime": 1743498051,
+    "updatetime": 1743498051,
+    "forum_topic_id": "591767370341576762"
+   }
+  },
+  {
+   "gid": "516332175331688923",
+   "event_type": 12,
+   "event_name": "Patch 01.002.203",
+   "rtime32_start_time": 1743757200,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516332175331688924",
+    "posttime": 1743757232,
+    "updatetime": 1743757232,
+    "forum_topic_id": "591767669138532265"
+   }
+  },
+  {
+   "gid": "516335345719050256",
+   "event_type": 28,
+   "event_name": "Helldivers 2 Masters of Ceremony Marches in on May 15",
+   "rtime32_start_time": 1746710580,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516335345719050257",
+    "posttime": 1746710609,
+    "updatetime": 1746710609,
+    "forum_topic_id": "591770754202223004"
+   }
+  },
+  {
+   "gid": "516335345719051928",
+   "event_type": 14,
+   "event_name": "Patch 01.003.000",
+   "rtime32_start_time": 1747126800,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516335345719051929",
+    "posttime": 1747126810,
+    "updatetime": 1747155398,
+    "forum_topic_id": "591771170072722033"
+   }
+  },
+  {
+   "gid": "516335345719052484",
+   "event_type": 28,
+   "event_name": "RED ALERT: Illuminate emerge from the Meridian Singularity!",
+   "rtime32_start_time": 1747127700,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516335345719052485",
+    "posttime": 1747127710,
+    "updatetime": 1747236347,
+    "forum_topic_id": "591771170072722453"
+   }
+  },
+  {
+   "gid": "542231772987916804",
+   "event_type": 12,
+   "event_name": "Patch 01.003.001",
+   "rtime32_start_time": 1747386060,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "542231772987916805",
+    "posttime": 1747386089,
+    "updatetime": 1747386089,
+    "forum_topic_id": "601904467726655792"
+   }
+  },
+  {
+   "gid": "542231772987917496",
+   "event_type": 13,
+   "event_name": "Patch 01.003.002",
+   "rtime32_start_time": 1747731600,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "542231772987917497",
+    "posttime": 1747731641,
+    "updatetime": 1747731641,
+    "forum_topic_id": "601904795201154635"
+   }
+  },
+  {
+   "gid": "542231772987917398",
+   "event_type": 28,
+   "event_name": "Helldivers, it’s time to defend the Heart of Democracy!",
+   "rtime32_start_time": 1747732320,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "542231772987917399",
+    "posttime": 1747732337,
+    "updatetime": 1747732337,
+    "forum_topic_id": "601904795201155063"
+   }
+  },
+  {
+   "gid": "516336614597723479",
+   "event_type": 13,
+   "event_name": "Patch 01.003.003",
+   "rtime32_start_time": 1748336520,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516336614597723480",
+    "posttime": 1748336541,
+    "updatetime": 1748336541,
+    "forum_topic_id": "591772487952370279"
+   }
+  },
+  {
+   "gid": "516337249186481697",
+   "event_type": 12,
+   "event_name": "Patch 01.003.004",
+   "rtime32_start_time": 1748595600,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516337249186481698",
+    "posttime": 1748595641,
+    "updatetime": 1748595641,
+    "forum_topic_id": "591772621004180691"
+   }
+  },
+  {
+   "gid": "516337874624315922",
+   "event_type": 28,
+   "event_name": "Use the full Force of Law in the streets on June 12!",
+   "rtime32_start_time": 1749152340,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516337874624315923",
+    "posttime": 1749152375,
+    "updatetime": 1749152375,
+    "forum_topic_id": "591773266114310600"
+   }
+  },
+  {
+   "gid": "516337874624317890",
+   "event_type": 13,
+   "event_name": "Patch 01.003.101",
+   "rtime32_start_time": 1749546000,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516337874624317891",
+    "posttime": 1749546038,
+    "updatetime": 1749546038,
+    "forum_topic_id": "591773674360594773"
+   }
+  },
+  {
+   "gid": "580514905803718665",
+   "event_type": 12,
+   "event_name": "Patch 01.003.102",
+   "rtime32_start_time": 1749718800,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "580514905803718666",
+    "posttime": 1749718833,
+    "updatetime": 1749718833,
+    "forum_topic_id": "664957399129408850"
+   }
+  },
+  {
+   "gid": "580514905803724132",
+   "event_type": 12,
+   "event_name": "🛠️ PATCH 01.003.103 ⚙️",
+   "rtime32_start_time": 1750150860,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "580514905803724133",
+    "posttime": 1750150887,
+    "updatetime": 1750167613,
+    "forum_topic_id": "664957874066169427"
+   }
+  },
+  {
+   "gid": "516339151333753417",
+   "event_type": 12,
+   "event_name": "Patch 01.003.104",
+   "rtime32_start_time": 1750755600,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516339151333753418",
+    "posttime": 1750755646,
+    "updatetime": 1750755646,
+    "forum_topic_id": "591774962691388043"
+   }
+  },
+  {
+   "gid": "516339785321679794",
+   "event_type": 28,
+   "event_name": "Warbond Token Announcement",
+   "rtime32_start_time": 1751460720,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516339785321679795",
+    "posttime": 1751460677,
+    "updatetime": 1751460677,
+    "forum_topic_id": "591775577045872782"
+   }
+  },
+  {
+   "gid": "516339785321681305",
+   "event_type": 28,
+   "event_name": "Helldivers 2 Control Group Warbond launches July 17!",
+   "rtime32_start_time": 1752152760,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516339785321681306",
+    "posttime": 1752152781,
+    "updatetime": 1752152781,
+    "forum_topic_id": "591776481004233611"
+   }
+  },
+  {
+   "gid": "601909716088521243",
+   "event_type": 13,
+   "event_name": "PATCH 01.003.200",
+   "rtime32_start_time": 1752570000,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "601909716088521244",
+    "posttime": 1752570038,
+    "updatetime": 1752570038,
+    "forum_topic_id": "506208224013413445"
+   }
+  },
+  {
+   "gid": "516341688493408284",
+   "event_type": 12,
+   "event_name": "Patch 01.003.201",
+   "rtime32_start_time": 1752656460,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516341688493408285",
+    "posttime": 1752656473,
+    "updatetime": 1752656473,
+    "forum_topic_id": "591776982251884343"
+   }
+  },
+  {
+   "gid": "516342955916658905",
+   "event_type": 12,
+   "event_name": " PATCH 01.003.202",
+   "rtime32_start_time": 1754384400,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516342955916658906",
+    "posttime": 1754384439,
+    "updatetime": 1754384439,
+    "forum_topic_id": "591778624389189086"
+   }
+  },
+  {
+   "gid": "812455995175338925",
+   "event_type": 28,
+   "event_name": "The long-awaited HELLDIVERS™ 2 x HALO: ODST Legendary Warbond arrives August 26",
+   "rtime32_start_time": 1755609000,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "812455995175338926",
+    "posttime": 1755609048,
+    "updatetime": 1755609048,
+    "forum_topic_id": "802323230979410700"
+   }
+  },
+  {
+   "gid": "516344858807370038",
+   "event_type": 13,
+   "event_name": "Patch 01.003.302",
+   "rtime32_start_time": 1756195260,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516344858807370039",
+    "posttime": 1756195288,
+    "updatetime": 1756195288,
+    "forum_topic_id": "591780546280033808"
+   }
+  },
+  {
+   "gid": "516344858807370167",
+   "event_type": 28,
+   "event_name": "Helldivers 2: Into the Unjust launches September 2!",
+   "rtime32_start_time": 1756211460,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516344858807370168",
+    "posttime": 1756211503,
+    "updatetime": 1756211503,
+    "forum_topic_id": "591780546280052722"
+   }
+  },
+  {
+   "gid": "516345493302804917",
+   "event_type": 28,
+   "event_name": "Dust Devils Premium Warbond coming to HELLDIVERS 2 on September 4!",
+   "rtime32_start_time": 1756386540,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516345493302804918",
+    "posttime": 1756386556,
+    "updatetime": 1756386556,
+    "forum_topic_id": "591780787069765248"
+   }
+  },
+  {
+   "gid": "516345493302804979",
+   "event_type": 12,
+   "event_name": "Patch 01.003.303",
+   "rtime32_start_time": 1756458000,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516345493302804980",
+    "posttime": 1756458049,
+    "updatetime": 1756458049,
+    "forum_topic_id": "591780787069817396"
+   }
+  },
+  {
+   "gid": "516345493302805199",
+   "event_type": 14,
+   "event_name": "Into the Unjust - Out Now!",
+   "rtime32_start_time": 1756806000,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516345493302805200",
+    "posttime": 1756803656,
+    "updatetime": 1756831895,
+    "forum_topic_id": "591781130180717872"
+   }
+  },
+  {
+   "gid": "516346126609155527",
+   "event_type": 12,
+   "event_name": "Hotfix 01.004.001",
+   "rtime32_start_time": 1756980780,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "516346126609155528",
+    "posttime": 1756980695,
+    "updatetime": 1756980838,
+    "forum_topic_id": "591781420376138856"
+   }
+  },
+  {
+   "gid": "787688820859470905",
+   "event_type": 12,
+   "event_name": "Patch 01.400.002",
+   "rtime32_start_time": 1758015600,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "787688820859470906",
+    "posttime": 1758015601,
+    "updatetime": 1758024813,
+    "forum_topic_id": "581649525160034921"
+   }
+  },
+  {
+   "gid": "543369627969781911",
+   "event_type": 28,
+   "event_name": "State of the Game Update #1",
+   "rtime32_start_time": 1758718860,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "543369627969781912",
+    "posttime": 1758718921,
+    "updatetime": 1758718921,
+    "forum_topic_id": "601916423125661689"
+   }
+  },
+  {
+   "gid": "543369627969783286",
+   "event_type": 28,
+   "event_name": "HELLDIVERS 2: Tech Blog #1",
+   "rtime32_start_time": 1759480320,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "543369627969783287",
+    "posttime": 1759480219,
+    "updatetime": 1759480319,
+    "forum_topic_id": "601917139265399360"
+   }
+  },
+  {
+   "gid": "538868565209514366",
+   "event_type": 12,
+   "event_name": "Into the Unjust: 4.1.0",
+   "rtime32_start_time": 1761212760,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "538868565209514367",
+    "posttime": 1761210259,
+    "updatetime": 1761231931,
+    "forum_topic_id": "597415360364441736"
+   }
+  },
+  {
+   "gid": "687488077158942133",
+   "event_type": 12,
+   "event_name": "Into the Unjust: 4.1.1",
+   "rtime32_start_time": 1762251480,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "687488077158942134",
+    "posttime": 1762251522,
+    "updatetime": 1762251522,
+    "forum_topic_id": "786567613838936440"
+   }
+  },
+  {
+   "gid": "571520933631623429",
+   "event_type": 28,
+   "event_name": "“Diving into the Development Team” part 1",
+   "rtime32_start_time": 1762437780,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "571520933631623430",
+    "posttime": 1762437790,
+    "updatetime": 1762437790,
+    "forum_topic_id": "662718826094431127"
+   }
+  },
+  {
+   "gid": "600795216679535663",
+   "event_type": 12,
+   "event_name": "Into the Unjust: 4.1.2",
+   "rtime32_start_time": 1763460660,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "600795216679535664",
+    "posttime": 1763460648,
+    "updatetime": 1764750811,
+    "forum_topic_id": "685237821971328966"
+   }
+  },
+  {
+   "gid": "604173306943244176",
+   "event_type": 28,
+   "event_name": "Python Commandos Premium Warbond airdrops into the jungle on December 2!",
+   "rtime32_start_time": 1764079620,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "604173306943244177",
+    "posttime": 1764079586,
+    "updatetime": 1764079586,
+    "forum_topic_id": "688616323490549192"
+   }
+  },
+  {
+   "gid": "491583942944621274",
+   "event_type": 13,
+   "event_name": "Into the Unjust: 5.0.0",
+   "rtime32_start_time": 1764670140,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "491583942944621275",
+    "posttime": 1764670145,
+    "updatetime": 1764759050,
+    "forum_topic_id": "684113302075277789"
+   }
+  },
+  {
+   "gid": "491583942944621371",
+   "event_type": 28,
+   "event_name": "HELLDIVERS 2 Tech Blog #2",
+   "rtime32_start_time": 1764688200,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "491583942944621372",
+    "posttime": 1764688243,
+    "updatetime": 1764689353,
+    "forum_topic_id": "684113302075290801"
+   }
+  },
+  {
+   "gid": "491584577841661619",
+   "event_type": 28,
+   "event_name": "The HELLDIVERS™ 2 x Killzone items return as a Legendary Warbond December 18th",
+   "rtime32_start_time": 1765462260,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "491584577841661620",
+    "posttime": 1765462117,
+    "updatetime": 1765541489,
+    "forum_topic_id": "682988284250454691"
+   }
+  },
+  {
+   "gid": "491585845845820021",
+   "event_type": 35,
+   "event_name": "Helldivers, the Festival of Reckoning is here!",
+   "rtime32_start_time": 1766052060,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "491585845845820022",
+    "posttime": 1766052106,
+    "updatetime": 1766052106,
+    "forum_topic_id": "688618329542314195"
+   }
+  },
+  {
+   "gid": "491587748125214428",
+   "event_type": 28,
+   "event_name": "The Redacted Regiment sneaks its way into Helldivers 2",
+   "rtime32_start_time": 1768313160,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "491587748125214429",
+    "posttime": 1768313195,
+    "updatetime": 1769593326,
+    "forum_topic_id": "686368930031307279"
+   }
+  },
+  {
+   "gid": "509603414731129453",
+   "event_type": 12,
+   "event_name": "Into the Unjust: 5.0.2",
+   "rtime32_start_time": 1769076180,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "509603414731129454",
+    "posttime": 1769076199,
+    "updatetime": 1769117626,
+    "forum_topic_id": "687495600012353877"
+   }
+  },
+  {
+   "gid": "509603414731131980",
+   "event_type": 28,
+   "event_name": "Helldivers break down the barricades with Siege Breakers!",
+   "rtime32_start_time": 1769522700,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "509603414731131981",
+    "posttime": 1769522748,
+    "updatetime": 1769593250,
+    "forum_topic_id": "687496109043554412"
+   }
+  },
+  {
+   "gid": "506226349467240138",
+   "event_type": 14,
+   "event_name": "Into the Unjust: 6.0.1",
+   "rtime32_start_time": 1770113340,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "506226349467240139",
+    "posttime": 1770113379,
+    "updatetime": 1770379621,
+    "forum_topic_id": "732532498321653554"
+   }
+  },
+  {
+   "gid": "541129880857740357",
+   "event_type": 28,
+   "event_name": "The Cyborg Threat Reveals itself in Machinery of Oppression",
+   "rtime32_start_time": 1770728700,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "541129880857740358",
+    "posttime": 1770728746,
+    "updatetime": 1770728746,
+    "forum_topic_id": "764058427367547168"
+   }
+  },
+  {
+   "gid": "541129880857741482",
+   "event_type": 12,
+   "event_name": "Machinery of Oppression 6.0.3",
+   "rtime32_start_time": 1770732000,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "541129880857741483",
+    "posttime": 1770732008,
+    "updatetime": 1770800038,
+    "forum_topic_id": "764058427367550651"
+   }
+  },
+  {
+   "gid": "520866219114365220",
+   "event_type": 28,
+   "event_name": "Helldivers 2 Large Build Delist",
+   "rtime32_start_time": 1772704980,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "520866219114365221",
+    "posttime": 1772705007,
+    "updatetime": 1772705007,
+    "forum_topic_id": "803467095729879927"
+   }
+  },
+  {
+   "gid": "520866219114367440",
+   "event_type": 28,
+   "event_name": "Hunker down with the Entrenched Division!",
+   "rtime32_start_time": 1773151560,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "520866219114367441",
+    "posttime": 1773151616,
+    "updatetime": 1773151616,
+    "forum_topic_id": "803467425782940376"
+   }
+  },
+  {
+   "gid": "541133047968301984",
+   "event_type": 12,
+   "event_name": "Machinery of Oppression: 6.1.0",
+   "rtime32_start_time": 1773741600,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "541133047968301985",
+    "posttime": 1773741633,
+    "updatetime": 1774348847,
+    "forum_topic_id": "796712653400861967"
+   }
+  },
+  {
+   "gid": "541133047968302008",
+   "event_type": 28,
+   "event_name": "Revealing our Machinery of Oppression Content Roadmap!",
+   "rtime32_start_time": 1773757080,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "541133047968302009",
+    "posttime": 1773757099,
+    "updatetime": 1773757099,
+    "forum_topic_id": "796712917458239919"
+   }
+  },
+  {
+   "gid": "507356684541232939",
+   "event_type": 12,
+   "event_name": "Machinery of Oppression: 6.1.1",
+   "rtime32_start_time": 1774432860,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "507356684541232940",
+    "posttime": 1774432850,
+    "updatetime": 1774432873,
+    "forum_topic_id": "803468921024927859"
+   }
+  },
+  {
+   "gid": "623327006824596290",
+   "event_type": 28,
+   "event_name": "The Exo Experts Warbond lumbers onto the battlefield",
+   "rtime32_start_time": 1776776460,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "623327006824596291",
+    "posttime": 1776776501,
+    "updatetime": 1776777209,
+    "forum_topic_id": "803471487710273694"
+   }
+  },
+  {
+   "gid": "541136853162525650",
+   "event_type": 12,
+   "event_name": "Machinery of Oppression:  6.2.2",
+   "rtime32_start_time": 1777367160,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "541136853162525651",
+    "posttime": 1777366896,
+    "updatetime": 1777470593,
+    "forum_topic_id": "803471938699797539"
+   }
+  },
+  {
+   "gid": "686379208862072850",
+   "event_type": 12,
+   "event_name": "Machinery of Oppression:  6.2.3",
+   "rtime32_start_time": 1778058060,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "686379208862072851",
+    "posttime": 1778058078,
+    "updatetime": 1778058078,
+    "forum_topic_id": "833872096657441690"
+   }
+  },
+  {
+   "gid": "686379208862073744",
+   "event_type": 28,
+   "event_name": "Transmission from Super Earth Command",
+   "rtime32_start_time": 1778241600,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "686379208862073745",
+    "posttime": 1778241585,
+    "updatetime": 1778241585,
+    "forum_topic_id": "833872326144561078"
+   }
+  },
+  {
+   "gid": "705520142370473014",
+   "event_type": 28,
+   "event_name": "Scheduled Maintenance on May 19",
+   "rtime32_start_time": 1779099060,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "705520142370473015",
+    "posttime": 1779099078,
+    "updatetime": 1779099078,
+    "forum_topic_id": "841754306658083372"
+   }
+  },
+  {
+   "gid": "705520142370473663",
+   "event_type": 12,
+   "event_name": "Machinery of Oppression:  6.2.4",
+   "rtime32_start_time": 1779181200,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "705520142370473664",
+    "posttime": 1779181217,
+    "updatetime": 1779181217,
+    "forum_topic_id": "841754560210967848"
+   }
+  },
+  {
+   "gid": "666114279352566049",
+   "event_type": 28,
+   "event_name": "Optimizing Liberty - Incoming Patch: 27th May",
+   "rtime32_start_time": 1779364920,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "666114279352566050",
+    "posttime": 1779364955,
+    "updatetime": 1779364955,
+    "forum_topic_id": "838376971028252815"
+   }
+  },
+  {
+   "gid": "707773210124354138",
+   "event_type": 28,
+   "event_name": "Patch Delay Update",
+   "rtime32_start_time": 1779973680,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "707773210124354139",
+    "posttime": 1779973713,
+    "updatetime": 1779973713,
+    "forum_topic_id": "657107714318655442"
+   }
+  },
+  {
+   "gid": "707773210124354385",
+   "event_type": 13,
+   "event_name": "Machinery of Oppression:  6.2.5",
+   "rtime32_start_time": 1780045440,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "707773210124354386",
+    "posttime": 1780045460,
+    "updatetime": 1780064580,
+    "forum_topic_id": "657107714318718232"
+   }
+  },
+  {
+   "gid": "668367347548946858",
+   "event_type": 28,
+   "event_name": "Transmission from the Game Director: Progressing Progression",
+   "rtime32_start_time": 1780574460,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "668367347548946859",
+    "posttime": 1780574506,
+    "updatetime": 1780574506,
+    "forum_topic_id": "568162255844262305"
+   }
+  },
+  {
+   "gid": "668367347548947961",
+   "event_type": 12,
+   "event_name": "Machinery of Oppression:  6.2.6",
+   "rtime32_start_time": 1781006460,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "668367347548947962",
+    "posttime": 1781006469,
+    "updatetime": 1781006946,
+    "forum_topic_id": "568162784030814297"
+   }
+  },
+  {
+   "gid": "676249280988579951",
+   "event_type": 13,
+   "event_name": "Machinery of Oppression:  6.3.0",
+   "rtime32_start_time": 1781608500,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "676249280988579952",
+    "posttime": 1781600424,
+    "updatetime": 1781608563,
+    "forum_topic_id": "568163224011372318"
+   }
+  },
+  {
+   "gid": "696516748689543378",
+   "event_type": 28,
+   "event_name": "Celebrating our community",
+   "rtime32_start_time": 1783080180,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "696516748689543379",
+    "posttime": 1783080240,
+    "updatetime": 1783080240,
+    "forum_topic_id": "568164991158484436"
+   }
+  },
+  {
+   "gid": "696516748689543612",
+   "event_type": 12,
+   "event_name": "Machinery of Oppression:  6.3.1",
+   "rtime32_start_time": 1783414860,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "696516748689543613",
+    "posttime": 1783414817,
+    "updatetime": 1783414888,
+    "forum_topic_id": "568165241142228341"
+   }
+  },
+  {
+   "gid": "696516748689545692",
+   "event_type": 28,
+   "event_name": "Super Credits & A Fairer Galactic War",
+   "rtime32_start_time": 1783598400,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "696516748689545693",
+    "posttime": 1783598407,
+    "updatetime": 1783598407,
+    "forum_topic_id": "568165510754118673"
+   }
+  },
+  {
+   "gid": "680756051157452526",
+   "event_type": 28,
+   "event_name": "The Supply FRV comes home for good in October",
+   "rtime32_start_time": 1784818800,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "680756051157452527",
+    "posttime": 1784818841,
+    "updatetime": 1784818841,
+    "forum_topic_id": "589558792744737694"
+   }
+  },
+  {
+   "gid": "714533682400987750",
+   "event_type": 28,
+   "event_name": "HELLDIVERS™ 2 x Warhammer 40,000 Legendary Warbond arrives August 12th",
+   "rtime32_start_time": 1785412800,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "714533682400987751",
+    "posttime": 1785412839,
+    "updatetime": 1785412839,
+    "forum_topic_id": "589559427438346792"
+   }
+  },
+  {
+   "gid": "706653652015644955",
+   "event_type": 28,
+   "event_name": "HELLDIVERS 2 Is Raising the Level Cap to 300",
+   "rtime32_start_time": 1786017600,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "706653652015644956",
+    "posttime": 1786017660,
+    "updatetime": 1786017660,
+    "forum_topic_id": "580552862448350819"
+   }
+  },
+  {
+   "gid": "703276586134143012",
+   "event_type": 14,
+   "event_name": "Devoid of Liberty: 7.0.0",
+   "rtime32_start_time": 1786525260,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "703276586134143013",
+    "posttime": 1786525290,
+    "updatetime": 1788352924,
+    "forum_topic_id": "585057095914650374"
+   }
+  },
+  {
+   "gid": "706653652015645326",
+   "event_type": 14,
+   "event_name": "HELLDIVERS 2 Devoid of Liberty Update Out Now",
+   "rtime32_start_time": 1786536300,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "706653652015645327",
+    "posttime": 1786536335,
+    "updatetime": 1786536335,
+    "forum_topic_id": "585057095914661640"
+   }
+  },
+  {
+   "gid": "703276586134145952",
+   "event_type": 12,
+   "event_name": "Devoid of Liberty: 7.0.1",
+   "rtime32_start_time": 1786957140,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "703276586134145953",
+    "posttime": 1786957199,
+    "updatetime": 1786957199,
+    "forum_topic_id": "585057417507795343"
+   }
+  },
+  {
+   "gid": "703276586134146072",
+   "event_type": 28,
+   "event_name": "Helldivers 2: A deep dive into the Illuminate Void",
+   "rtime32_start_time": 1787054940,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "703276586134146073",
+    "posttime": 1787054998,
+    "updatetime": 1787054998,
+    "forum_topic_id": "585057417507893910"
+   }
+  },
+  {
+   "gid": "671752023818896712",
+   "event_type": 12,
+   "event_name": "Devoid of Liberty: 7.0.2",
+   "rtime32_start_time": 1787648460,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "671752023818896713",
+    "posttime": 1787648469,
+    "updatetime": 1787648469,
+    "forum_topic_id": "583932134340995654"
+   }
+  },
+  {
+   "gid": "703278488775295132",
+   "event_type": 28,
+   "event_name": "Behind the scenes: The Hive Lord",
+   "rtime32_start_time": 1788440520,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "703278488775295133",
+    "posttime": 1788440567,
+    "updatetime": 1788440567,
+    "forum_topic_id": "585058998561162542"
+   }
+  },
+  {
+   "gid": "672879825739842476",
+   "event_type": 28,
+   "event_name": "Let shockwaves of Freedom roll across the battlefield with Ironclad Democracy!",
+   "rtime32_start_time": 1789477800,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "672879825739842477",
+    "posttime": 1789477829,
+    "updatetime": 1789477829,
+    "forum_topic_id": "525387344813177165"
+   }
+  },
+  {
+   "gid": "668376859863416942",
+   "event_type": 13,
+   "event_name": " Devoid of Liberty: 7.1.0",
+   "rtime32_start_time": 1790067600,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "668376859863416943",
+    "posttime": 1790067627,
+    "updatetime": 1790067627,
+    "forum_topic_id": "572675720491546248"
+   }
+  },
+  {
+   "gid": "715665292442731519",
+   "event_type": 12,
+   "event_name": "Devoid of Liberty: 7.1.1",
+   "rtime32_start_time": 1790240400,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "715665292442731520",
+    "posttime": 1790240423,
+    "updatetime": 1790240423,
+    "forum_topic_id": "594068102507001997"
+   }
+  },
+  {
+   "gid": "715665292442731947",
+   "event_type": 28,
+   "event_name": "Launching Devoid of Liberty: A Look Back",
+   "rtime32_start_time": 1790337600,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "715665292442731948",
+    "posttime": 1790337661,
+    "updatetime": 1790337661,
+    "forum_topic_id": "594068102507108111"
+   }
+  },
+  {
+   "gid": "715665925076944715",
+   "event_type": 28,
+   "event_name": "Galactic Network Maintenance",
+   "rtime32_start_time": 1791193020,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "715665925076944716",
+    "posttime": 1791193052,
+    "updatetime": 1791193052,
+    "forum_topic_id": "592943200279349300"
+   }
+  },
+  {
+   "gid": "715666559007198192",
+   "event_type": 28,
+   "event_name": "Line Up the Perfect Shot with the Scope of Authority Premium Warbond!",
+   "rtime32_start_time": 1791896820,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "715666559007198193",
+    "posttime": 1791896839,
+    "updatetime": 1791896839,
+    "forum_topic_id": "592943924842229968"
+   }
+  },
+  {
+   "gid": "713415392836453548",
+   "event_type": 28,
+   "event_name": "Changing anti-cheat in HELLDIVERS 2",
+   "rtime32_start_time": 1792476000,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "713415392836453549",
+    "posttime": 1792476019,
+    "updatetime": 1792476019,
+    "forum_topic_id": "573804280379723049"
+   }
+  },
+  {
+   "gid": "715666559007196081",
+   "event_type": 13,
+   "event_name": " Devoid of Liberty: 7.2.0",
+   "rtime32_start_time": 1792486860,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "715666559007196082",
+    "posttime": 1792486911,
+    "updatetime": 1792486911,
+    "forum_topic_id": "573804280379734675"
+   }
+  },
+  {
+   "gid": "708912427613295258",
+   "event_type": 12,
+   "event_name": "Devoid of Liberty: 7.2.1",
+   "rtime32_start_time": 1792670400,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "708912427613295259",
+    "posttime": 1792670404,
+    "updatetime": 1792670404,
+    "forum_topic_id": "569300839163940902"
+   }
+  },
+  {
+   "gid": "708913061799395773",
+   "event_type": 12,
+   "event_name": "Devoid of Liberty: 7.2.2",
+   "rtime32_start_time": 1793268000,
+   "hidden": 0,
+   "announcement_body": {
+    "gid": "708913061799395774",
+    "posttime": 1793268006,
+    "updatetime": 1793268006,
+    "forum_topic_id": "570427373261051742"
+   }
+  }
+ ]
+}

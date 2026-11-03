@@ -16,7 +16,10 @@ from steam_analyzer.http import request_with_retry
 
 REVIEWS_URL = "https://api.steampowered.com/IUserReviewsService/GetAppReviews/v1/"
 EVENTS_URL = "https://store.steampowered.com/events/ajaxgetadjacentpartnerevents/"
+NEWS_URL = "https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/"
 COMMENTS_URL = "https://steamcommunity.com/app/{app_id}/eventcomments/{topic_id}/"
+# The store page takes the event gid; the announcement gid opens a generic news hub instead.
+ANNOUNCEMENT_URL = "https://store.steampowered.com/news/app/{app_id}/view/{event_gid}"
 
 REVIEW_FILTER_RECENT = 1  # the only sort that ends with an empty page, so it can enumerate everything
 PURCHASE_TYPE_ALL = 1
@@ -64,6 +67,13 @@ def fetch_events_page(
         params["gidevent"] = older_than_gid
     resp = request_with_retry(session, "GET", EVENTS_URL, params=params)
     return resp.json().get("events", [])
+
+
+def fetch_announcement_count(session: requests.Session, app_id: int) -> int:
+    """Total official announcements according to the news API, used to cross-check catalog coverage."""
+    params = {"appid": app_id, "count": 1, "maxlength": 1, "feeds": "steam_community_announcements"}
+    resp = request_with_retry(session, "GET", NEWS_URL, params=params)
+    return int(resp.json()["appnews"]["count"])
 
 
 def fetch_comment_page(session: requests.Session, app_id: int, topic_id: str, page: int) -> str:
