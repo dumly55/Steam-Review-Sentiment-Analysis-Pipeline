@@ -58,3 +58,18 @@ Checked on the full history (168 announcements, 2023-09-22 to 2026-10-29) on **2
 - **Late patch-note edits are common.** 35 of the 96 release posts were edited after posting, and 4 were edited after the next release shipped (e.g. 4.1.2 after 5.0.0). 7.0.0 was edited three weeks after release.
 - `rtime32_start_time` differs from the post time by more than 5 minutes on 3 release posts, by up to 135 minutes (6.3.0). Neither is documented as the moment the patch went live; the post time is used and labeled, and `config/release_overrides.json` takes corrections.
 - PostgreSQL returns `timestamptz` values in the session's local time zone. All display code converts to UTC explicitly.
+
+## Collection and local analysis (Phase 3)
+
+Checked on **2026-11-03** with a run on 7.1.1 (window 2026-09-24 09:00 UTC to 2026-10-20 09:01 UTC), capped at 150 items per source. The cap makes the reviews source partial by design, so this run checks the pipeline. It is **not** a finding about the update.
+
+- **Comments, live**: the 7.1.1 thread was read over 9 requests (8 pages of 15, then an empty page). It collected 120 of the 120 comments Steam reported, posted from 2026-09-24 to 2026-10-23. The 2 posted after 7.2.0 shipped were excluded from 7.1.1's window, and 2 more were excluded as not English.
+- **Reviews, live**: Steam reported 2,854 English reviews created in the window. Other windows: 3,195 for 7.2.1 and 1,345 so far for 7.2.2. Reviews are returned newest first, so the 150 capped reviews all came from the window's last 18 hours. That is a strongly biased sample, which is one more reason a capped source never gets a label.
+- **Historical edits are real**: 10 of those 150 reviews had been edited after 7.2.0 released. They were excluded, because no earlier text had been captured.
+- **Throughput**: `qwen3:8b` averaged about 1.7 s per review and 2.0 s per comment, warm, on the RTX 3080. The whole run (collection plus 255 analyses) took 10.5 minutes.
+- **Validation failures**: 11 of 255 items (4.3%) failed after 3 attempts. Every failure was evidence that paraphrased or stitched together the text instead of quoting it, mostly in long items with many observations. They stay in the coverage denominator (95.7% for both sources).
+- **Model behaviour seen in the outputs** (spot checks, not a measured accuracy):
+  - Prompt v1 marked a review that said only "love it" as a reaction to the update, and marked bug reports and complaints about the developer as unrelated. Prompt v2 states these cases explicitly.
+  - Prompt v2 still marks some wishlist comments on the announcement thread ("Add more planet types", "Remove intrusive fog") as explicit update feedback, and occasionally links an observation to the wrong change.
+  - Synonym keys sometimes split ("eac" and "easy_anticheat"), so the alias list in `config/analysis.json` grows from real output.
+- Model accuracy has **not** been measured. Results from live runs are exploratory until a human-labeled sample has been compared with the model's output.

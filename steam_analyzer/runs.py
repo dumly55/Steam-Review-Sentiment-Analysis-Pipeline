@@ -1,7 +1,7 @@
 """Creating runs: capture the cutoff once, refresh the catalog, and freeze each selected update's window.
 
-Collection and analysis (Phase 3) will read these frozen rows rather than recomputing windows,
-so a release published mid-run cannot change a run that already started.
+Collection and analysis (pipeline.py) read these frozen rows rather than recomputing anything, so a
+release published mid-run, a later patch-note edit or a config change cannot alter a run that exists.
 """
 
 from collections.abc import Callable
@@ -15,6 +15,10 @@ from steam_analyzer.catalog import NoteVersion, choose_note_version, compute_win
 from steam_analyzer.catalog_store import (
     DUPLICATE_MERGE_HOURS, OVERRIDES_FILE, RefreshResult, load_catalog,
 )
+from steam_analyzer.config import analysis_config, load_settings
+from steam_analyzer.patch_notes import render_notes
+
+MISSING_NOTES = "(No patch notes were captured for this update.)"
 
 WINDOW_RULE = "start <= feedback created_at < next strictly later release, or the run cutoff for the latest"
 
@@ -29,15 +33,18 @@ def create_run(
     update_ids: list[int],
     refresh: Callable[[], RefreshResult] | None,
     overrides_path: Path = OVERRIDES_FILE,
+    analysis: dict | None = None,
 ) -> int:
     """Freeze a run for the selected updates and return its id. Nothing is collected or analyzed here.
 
     The cutoff is captured before the catalog refresh, so a successful refresh verifies the catalog
     through the cutoff. If the refresh fails, the latest window is stored as 'uncertain'.
+    `analysis` is the frozen analysis config (see config.analysis_config); it defaults to the current one.
     """
     selected = sorted(set(update_ids))
     if not selected:
         raise RunError("Select at least one update.")
+    analysis = analysis if analysis is not None else analysis_config(load_settings())
     cutoff = datetime.now(timezone.utc).replace(microsecond=0)
     refreshed = refresh() if refresh else None
     catalog = load_catalog(conn, app_id, overrides_path)
@@ -62,6 +69,7 @@ def create_run(
         "overrides_file": overrides_path.read_text(encoding="utf-8") if overrides_path.exists() else None,
         "catalog_refresh_status": refreshed.status if refreshed else "not refreshed",
         "catalog_coverage_warning": catalog.coverage_warning,
+        "analysis": analysis,
     }
 
     try:
@@ -81,14 +89,24 @@ def create_run(
                 (release.key,),
             )]
             note, notes_status = choose_note_version(versions, release.primary.published_at, window.end or cutoff)
+            body = conn.execute("SELECT body FROM update_note_versions WHERE note_version_id = %s",
+                                (note.note_version_id,)).fetchone()[0] if note else None
+            notes = render_notes(body, analysis["extraction"]["max_notes_chars"]) if body is not None else None
             conn.execute(
                 """INSERT INTO run_updates (run_id, update_id, window_start, window_end, window_status, window_note,
-                                            next_update_id, simultaneous_release, note_version_id, notes_status)
-                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                                            next_update_id, simultaneous_release, note_version_id, notes_status,
+                                            notes_context, notes_truncated)
+                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
                 (run_id, uid, window.start, window.end, window.status, window.note,
                  id_by_key.get(window.next_release_key), window.simultaneous,
-                 note.note_version_id if note else None, notes_status),
+                 note.note_version_id if note else None, notes_status,
+                 notes.text if notes else MISSING_NOTES, bool(notes and notes.truncated)),
             )
+            if notes and notes.changes:
+                conn.cursor().executemany(
+                    "INSERT INTO run_note_changes (run_id, update_id, change_id, section, text) VALUES (%s, %s, %s, %s, %s)",
+                    [(run_id, uid, c.change_id, c.section, c.text) for c in notes.changes],
+                )
         conn.commit()
     except Exception:
         conn.rollback()

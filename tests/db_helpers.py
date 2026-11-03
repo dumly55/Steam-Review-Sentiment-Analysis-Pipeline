@@ -2,9 +2,19 @@
 
 import psycopg
 
-from steam_analyzer.config import load_settings
+from steam_analyzer.config import analysis_config, load_settings
+from steam_analyzer.db import delete_app_data
 
 DATABASE_URL = load_settings().database_url
+
+
+def quick_analysis(max_items: int | None = None, **thresholds) -> dict:
+    """The real analysis config with no page delays, a fake model name and optional threshold overrides."""
+    config = analysis_config(load_settings(), max_items)
+    config["model"] = "fake-model"
+    config["collection"]["page_delay_seconds"] = 0
+    config["thresholds"].update(thresholds)
+    return config
 
 
 def postgres_reachable() -> bool:
@@ -29,15 +39,4 @@ def pager(events):
 
 
 def cleanup_app(conn: psycopg.Connection, app_id: int) -> None:
-    conn.rollback()
-    for sql in [
-        "DELETE FROM runs WHERE app_id = %(a)s",
-        "DELETE FROM update_sources WHERE update_id IN (SELECT update_id FROM updates WHERE app_id = %(a)s)",
-        "DELETE FROM updates WHERE app_id = %(a)s",
-        "DELETE FROM update_note_versions WHERE event_gid IN (SELECT event_gid FROM source_events WHERE app_id = %(a)s)",
-        "DELETE FROM source_events WHERE app_id = %(a)s",
-        "DELETE FROM catalog_refreshes WHERE app_id = %(a)s",
-        "DELETE FROM games WHERE app_id = %(a)s",
-    ]:
-        conn.execute(sql, {"a": app_id})
-    conn.commit()
+    delete_app_data(conn, app_id)

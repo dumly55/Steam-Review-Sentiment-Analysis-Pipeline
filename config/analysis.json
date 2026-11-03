@@ -1,0 +1,64 @@
+{
+  "max_items_per_source": null,
+  "collection": {
+    "review_page_size": 100,
+    "page_delay_seconds": 1.0,
+    "max_pages": 2000
+  },
+  "extraction": {
+    "temperature": 0,
+    "seed": 42,
+    "num_ctx": 12288,
+    "max_attempts": 3,
+    "max_feedback_chars": 4000,
+    "max_notes_chars": 24000,
+    "timeout_seconds": 300
+  },
+  "thresholds": {
+    "recurring_min_authors": 5,
+    "recurring_min_share": 0.05,
+    "label_min_qualifying_authors": 20,
+    "label_min_coverage": 0.9,
+    "label_majority_share": 0.6,
+    "label_min_margin": 0.2
+  },
+  "categories": [
+    "balance", "gameplay", "stability", "performance", "bugs", "content", "controls_ui",
+    "monetization", "matchmaking", "progression", "developer", "other"
+  ],
+  "known_feature_keys": [
+    "update_overall", "crashes", "performance", "server_connection", "matchmaking",
+    "bugs_general", "difficulty", "progression_grind", "monetization", "ui"
+  ],
+  "feature_aliases": {
+    "crash": "crashes",
+    "crashing": "crashes",
+    "game_crashes": "crashes",
+    "game_crashing": "crashes",
+    "ctd": "crashes",
+    "fps": "performance",
+    "frame_rate": "performance",
+    "framerate": "performance",
+    "stuttering": "performance",
+    "stutter": "performance",
+    "lag": "performance",
+    "servers": "server_connection",
+    "server_issues": "server_connection",
+    "connection_issues": "server_connection",
+    "disconnects": "server_connection",
+    "bugs": "bugs_general",
+    "update": "update_overall",
+    "patch": "update_overall",
+    "the_update": "update_overall",
+    "the_patch": "update_overall",
+    "user_interface": "ui",
+    "eac": "anti_cheat",
+    "easy_anticheat": "anti_cheat",
+    "easy_anti_cheat": "anti_cheat",
+    "anticheat": "anti_cheat",
+    "mod_support": "mods",
+    "mods_compatibility": "mods",
+    "mod_compatibility": "mods",
+    "modding": "mods"
+  }
+}
