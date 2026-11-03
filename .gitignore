@@ -23,3 +23,6 @@ data/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Local-only notes and reference copies
+.local/

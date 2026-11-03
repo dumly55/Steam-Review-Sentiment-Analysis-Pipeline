@@ -1,0 +1,5 @@
+# Workarounds for postgres-mcp 0.3.0 packaging problems (checked 2026-11-02):
+# - it pins pglast==7.2.0, which is not published on PyPI; 7.22 is the nearest 7.x release.
+# - it allows any mcp>=1.5, but mcp 2.x removed the decorators the server uses.
+pglast==7.22
+mcp[cli]<2
