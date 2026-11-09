@@ -61,6 +61,16 @@ ollama pull qwen3:8b
 python -m steam_analyzer initdb
 ```
 
+For about 30% faster analysis on a 10 GB GPU, let Ollama answer two requests at once (measured in [docs/source_findings.md](docs/source_findings.md#throughput-tuning)), then quit and reopen Ollama:
+
+```powershell
+setx OLLAMA_FLASH_ATTENTION 1
+setx OLLAMA_NUM_PARALLEL 2
+setx OLLAMA_KV_CACHE_TYPE q8_0
+```
+
+The pipeline sends `concurrent_requests` (default 2, in `config/analysis.json`) at once. Without these settings Ollama queues the second request, which is just as fast as sending one at a time.
+
 ## Commands
 
 ```powershell

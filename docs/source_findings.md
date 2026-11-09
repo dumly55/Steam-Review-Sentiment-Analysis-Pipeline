@@ -73,3 +73,21 @@ Checked on **2026-11-03** with a run on 7.1.1 (window 2026-09-24 09:00 UTC to 20
   - Prompt v2 still marks some wishlist comments on the announcement thread ("Add more planet types", "Remove intrusive fog") as explicit update feedback, and occasionally links an observation to the wrong change.
   - Synonym keys sometimes split ("eac" and "easy_anticheat"), so the alias list in `config/analysis.json` grows from real output.
 - Model accuracy has **not** been measured. Results from live runs are exploratory until a human-labeled sample has been compared with the model's output.
+
+## Throughput tuning
+
+Measured on **2026-11-08** by replaying 43 items from the 7.1.1 run (every sixth eligible item) through the same extraction code, each setting on a fresh `ollama serve`, warm, with nothing else using the GPU (RTX 3080, 10 GB, `qwen3:8b` Q4_K_M, `num_ctx` 12288).
+
+| Ollama setting | Requests at once | s per item | Model in VRAM |
+|---|---|---|---|
+| Default (flash attention off) | 1 | 1.74 | 100% |
+| `OLLAMA_FLASH_ATTENTION=1` | 1 | 1.62 | 100% |
+| Flash attention, `OLLAMA_NUM_PARALLEL=2` | 2 | 1.20 | 93% |
+| Flash attention, parallel 2, `OLLAMA_KV_CACHE_TYPE=q8_0` | 2 | 1.21 | 100% |
+| Flash attention, parallel 4 (earlier pass, GPU shared with a game) | 4 | 4.09 | 64% |
+
+- Two requests at once with flash attention cut the time per item by about 30%. Four do not fit in 10 GB at this context size and spill to the CPU, which is far slower.
+- The quantized KV cache keeps the parallel-2 setup entirely in VRAM (8.0 GB instead of 9.2 GB) at the same speed, which leaves headroom for other GPU use.
+- Labels did not move: every setting matched the original run on all overall sentiments and on 95–100% of update-relevance labels, the same spread as rerunning the default setting.
+- Third attempts rescued 0 of 11 failing items in the 7.1.1 run while taking about a third of the time spent on failures, so extraction now stops after 2 attempts.
+- A prompt asking for shorter evidence quotes removed retries (1.48 s per item) but matched only 87.5% of the original update-relevance labels against 95% for the default, so it was not adopted.

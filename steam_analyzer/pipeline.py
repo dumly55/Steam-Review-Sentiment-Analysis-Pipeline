@@ -12,6 +12,7 @@ import sys
 import time
 from collections import Counter
 from collections.abc import Callable
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -238,31 +239,43 @@ def _analyze(conn: psycopg.Connection, app_id: int, ru: RunUpdate, analysis: dic
     if not pending:
         return
     log.info("update %d (%s): analyzing %d items", ru.update_id, ru.title, len(pending))
+    keys = [cache_key(app_id, source_type, item_id, text_hash, ctx_hash, extractor.model, extractor.model_digest,
+                      extractor.settings) for source_type, item_id, _, text_hash in pending]
+    hits = dict(conn.execute(
+        "SELECT cache_key, assessment_id FROM ai_assessments WHERE cache_key = ANY(%s) AND status = 'succeeded'",
+        (keys,)).fetchall())
+
+    def ask(job: tuple) -> ExtractResult | None:  # runs on a worker thread: model call only, no database
+        (source_type, item_id, text, _), key = job
+        return None if key in hits else extract(extractor, ctx, source_type, f"{source_type}:{item_id}", text)
+
+    # Matches OLLAMA_NUM_PARALLEL; runs frozen before this setting existed send one request at a time.
+    pool = ThreadPoolExecutor(analysis["extraction"].get("concurrent_requests", 1))
     counts: Counter[str] = Counter()
     started = time.monotonic()
-    for i, (source_type, item_id, text, text_hash) in enumerate(pending, 1):
-        key = cache_key(app_id, source_type, item_id, text_hash, ctx_hash, extractor.model, extractor.model_digest,
-                        extractor.settings)
-        hit = conn.execute("SELECT assessment_id FROM ai_assessments WHERE cache_key = %s AND status = 'succeeded'",
-                           (key,)).fetchone()
-        if hit:
-            assessment_id, status, cached = hit[0], "succeeded", True
-        else:
-            result = extract(extractor, ctx, source_type, f"{source_type}:{item_id}", text)
-            assessment_id = _store_assessment(conn, key, app_id, source_type, item_id, text_hash, ctx_hash,
-                                              extractor, result)
-            status, cached = ("succeeded" if result.extraction else "failed"), False
-        conn.execute(
-            """UPDATE run_feedback SET assessment_id = %s, analysis_status = %s, cache_hit = %s
-               WHERE run_id = %s AND update_id = %s AND source_type = %s AND source_item_id = %s""",
-            (assessment_id, status, cached, ru.run_id, ru.update_id, source_type, item_id))
-        conn.commit()
-        counts[status] += 1
-        counts["cache hits"] += cached
-        if i % 25 == 0 or i == len(pending):
-            elapsed = time.monotonic() - started
-            log.info("update %d: %d/%d analyzed (%s), %.1f s per item", ru.update_id, i, len(pending),
-                     ", ".join(f"{v} {k}" for k, v in counts.items()), elapsed / i)
+    try:
+        # map() yields in input order, so results are stored and committed one by one on this thread.
+        for i, ((source_type, item_id, _, text_hash), key, result) in enumerate(
+                zip(pending, keys, pool.map(ask, zip(pending, keys))), 1):
+            if result is None:
+                assessment_id, status, cached = hits[key], "succeeded", True
+            else:
+                assessment_id = _store_assessment(conn, key, app_id, source_type, item_id, text_hash, ctx_hash,
+                                                  extractor, result)
+                status, cached = ("succeeded" if result.extraction else "failed"), False
+            conn.execute(
+                """UPDATE run_feedback SET assessment_id = %s, analysis_status = %s, cache_hit = %s
+                   WHERE run_id = %s AND update_id = %s AND source_type = %s AND source_item_id = %s""",
+                (assessment_id, status, cached, ru.run_id, ru.update_id, source_type, item_id))
+            conn.commit()
+            counts[status] += 1
+            counts["cache hits"] += cached
+            if i % 25 == 0 or i == len(pending):
+                elapsed = time.monotonic() - started
+                log.info("update %d: %d/%d analyzed (%s), %.1f s per item", ru.update_id, i, len(pending),
+                         ", ".join(f"{v} {k}" for k, v in counts.items()), elapsed / i)
+    finally:
+        pool.shutdown(cancel_futures=True)  # on an error or Ctrl+C, drop queued items; they stay pending
 
 
 def _store_assessment(conn: psycopg.Connection, key: str, app_id: int, source_type: str, item_id: str,

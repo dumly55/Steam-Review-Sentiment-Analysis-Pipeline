@@ -108,17 +108,16 @@ def store_feedback(conn: psycopg.Connection, p: SourceProgress, app_id: int, rec
     ).fetchone() is not None
 
 
-def collect_reviews(
-    conn: psycopg.Connection, run_source_id: int, app_id: int, window_start: datetime, window_end: datetime,
-    fetch: FetchReviews, max_items: int | None, max_pages: int, page_delay: float,
-    sleep: Callable[[float], None] = time.sleep,
-) -> str:
-    """Page through every review created in the window, newest first, by cursor."""
+ReadPage = Callable[[str], tuple[list[FeedbackRecord], int | None, str | None]]  # cursor -> records, total, next
+
+
+def _page_through(conn: psycopg.Connection, run_source_id: int, app_id: int, first_cursor: str, read_page: ReadPage,
+                  max_items: int | None, max_pages: int, page_delay: float, sleep: Callable[[float], None]) -> str:
+    """The paging loop both collectors share: each page is stored with its checkpoint, so a rerun resumes."""
     p = load_progress(conn, run_source_id)
     if p.status == "complete":
         return p.status
-    date_range = (int(window_start.timestamp()), math.ceil(window_end.timestamp()) - 1)  # Steam's end is inclusive
-    cursor = p.next_cursor or "*"
+    cursor = p.next_cursor or first_cursor
     p.status = "collecting"
     _save(conn, p)
     while True:
@@ -127,25 +126,38 @@ def collect_reviews(
         if p.pages >= max_pages:
             return _finish(conn, p, "partial", f"stopped at the limit of {max_pages} pages")
         try:
-            page = fetch(cursor, date_range)
+            records, total, next_cursor = read_page(cursor)
         except Exception as exc:
-            return _finish(conn, p, "partial" if p.pages else "unavailable", f"request failed: {exc}")
+            return _finish(conn, p, "partial" if p.pages else "unavailable", f"request at {cursor} failed: {exc}")
         p.pages += 1
-        if p.reported_total is None and page.get("total_matching") is not None:
-            p.reported_total = int(page["total_matching"])
-        reviews = page.get("reviews") or []
+        if p.reported_total is None and total is not None:
+            p.reported_total = int(total)
         if max_items is not None:
-            reviews = reviews[:max_items - p.items]
+            records = records[:max_items - p.items]
         observed = datetime.now(timezone.utc)
-        new = sum(store_feedback(conn, p, app_id, review_record(r, app_id), observed) for r in reviews)
+        new = sum(store_feedback(conn, p, app_id, r, observed) for r in records)
         p.items += new
-        next_cursor = page.get("cursor")
         # Stop on an empty page, and also if Steam repeats a page or a cursor, so paging can never loop.
-        if not reviews or new == 0 or not next_cursor or next_cursor == cursor:
+        if not records or new == 0 or not next_cursor or next_cursor == cursor:
             return _finish_by_count(conn, p)
         p.next_cursor = cursor = next_cursor
         _save(conn, p)
         sleep(page_delay)
+
+
+def collect_reviews(
+    conn: psycopg.Connection, run_source_id: int, app_id: int, window_start: datetime, window_end: datetime,
+    fetch: FetchReviews, max_items: int | None, max_pages: int, page_delay: float,
+    sleep: Callable[[float], None] = time.sleep,
+) -> str:
+    """Page through every review created in the window, newest first, by cursor."""
+    date_range = (int(window_start.timestamp()), math.ceil(window_end.timestamp()) - 1)  # Steam's end is inclusive
+
+    def read_page(cursor: str):
+        page = fetch(cursor, date_range)
+        return ([review_record(r, app_id) for r in page.get("reviews") or []], page.get("total_matching"),
+                page.get("cursor"))
+    return _page_through(conn, run_source_id, app_id, "*", read_page, max_items, max_pages, page_delay, sleep)
 
 
 def collect_comments(
@@ -158,33 +170,8 @@ def collect_comments(
     Comments posted after the window are collected too and then excluded by the window check, so the
     thread's total can be verified and the exclusions are visible.
     """
-    p = load_progress(conn, run_source_id)
-    if p.status == "complete":
-        return p.status
-    page_no = int(p.next_cursor or 1)
-    p.status = "collecting"
-    _save(conn, p)
-    while True:
-        if max_items is not None and p.items >= max_items:
-            return _finish(conn, p, "partial", f"stopped at the cap of {max_items} items", capped=True)
-        if p.pages >= max_pages:
-            return _finish(conn, p, "partial", f"stopped at the limit of {max_pages} pages")
-        try:
-            comments, total = parse_comment_page(fetch(thread_id, page_no))
-        except Exception as exc:
-            return _finish(conn, p, "partial" if p.pages else "unavailable", f"page {page_no} failed: {exc}")
-        p.pages += 1
-        if total is not None:
-            p.reported_total = total
-        if max_items is not None:
-            comments = comments[:max_items - p.items]
-        observed = datetime.now(timezone.utc)
-        new = sum(store_feedback(conn, p, app_id, comment_record(c, app_id, thread_id, event_gid, page_no), observed)
-                  for c in comments)
-        p.items += new
-        if not comments or new == 0:
-            return _finish_by_count(conn, p)
-        page_no += 1
-        p.next_cursor = str(page_no)
-        _save(conn, p)
-        sleep(page_delay)
+    def read_page(cursor: str):
+        page = int(cursor)
+        comments, total = parse_comment_page(fetch(thread_id, page))
+        return [comment_record(c, app_id, thread_id, event_gid, page) for c in comments], total, str(page + 1)
+    return _page_through(conn, run_source_id, app_id, "1", read_page, max_items, max_pages, page_delay, sleep)

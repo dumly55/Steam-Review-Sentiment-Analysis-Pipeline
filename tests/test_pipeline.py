@@ -9,6 +9,7 @@ import time
 
 import psycopg
 import pytest
+import requests
 from db_helpers import DATABASE_URL, cleanup_app, event, pager, postgres_reachable, quick_analysis
 
 from steam_analyzer.catalog_store import load_catalog, refresh_catalog
@@ -250,6 +251,31 @@ def test_a_run_stopped_by_an_unreachable_model_resumes_where_it_stopped(setup):
     assert process_run(conn, run_id, scenario.sources(), scenario.extractor) == "completed"
     assert source(conn, run_id, "review")["collected"] == 9  # nothing collected twice
     assert source(conn, run_id, "review")["pending"] == 0
+
+
+def test_a_model_lost_mid_run_with_parallel_requests_leaves_no_duplicates_and_resumes(setup):
+    conn, scenario, new_run, _ = setup
+    run_id = new_run()
+    calls = []
+
+    class DropsAfterThree(ScriptedExtractor):
+        def complete(self, messages, schema):
+            calls.append(1)
+            if len(calls) > 3:
+                raise requests.ConnectionError("connection refused")
+            return super().complete(messages, schema)
+
+    dropping = lambda config: DropsAfterThree(scenario.answers, config["analysis"]["extraction"]["max_feedback_chars"])
+    assert process_run(conn, run_id, scenario.sources(), dropping) == "failed"
+    stored = conn.execute("SELECT count(*) FROM run_feedback WHERE run_id = %s AND analysis_status <> 'pending'"
+                          " AND eligibility = 'eligible'", (run_id,)).fetchone()[0]
+    assert 0 < stored <= 3
+
+    assert process_run(conn, run_id, scenario.sources(), scenario.extractor) == "completed"
+    assert conn.execute("SELECT count(*) FROM run_feedback WHERE run_id = %s AND eligibility = 'eligible'"
+                        " AND analysis_status = 'pending'", (run_id,)).fetchone()[0] == 0
+    assert conn.execute("""SELECT count(*) FROM ai_assessments WHERE app_id = %s AND status = 'succeeded'
+                           GROUP BY cache_key HAVING count(*) > 1""", (TEST_APP,)).fetchall() == []
 
 
 def test_an_edit_after_the_window_uses_text_captured_by_an_earlier_run(setup):  # AC13

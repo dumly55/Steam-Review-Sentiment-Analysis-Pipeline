@@ -9,7 +9,8 @@
     "temperature": 0,
     "seed": 42,
     "num_ctx": 12288,
-    "max_attempts": 3,
+    "max_attempts": 2,
+    "concurrent_requests": 2,
     "max_feedback_chars": 4000,
     "max_notes_chars": 24000,
     "timeout_seconds": 300

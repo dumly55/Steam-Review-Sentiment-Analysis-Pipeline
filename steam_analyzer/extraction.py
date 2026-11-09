@@ -272,7 +272,8 @@ def extract(extractor: Extractor, ctx: Context, source_type: str, feedback_ref: 
 
 
 class OllamaExtractor:
-    """Sequential, non-thinking requests to a local Ollama model with a JSON schema and a pinned seed."""
+    """Non-thinking requests to a local Ollama model with a JSON schema and a pinned seed. Safe to call from
+    several threads; the pipeline sends `concurrent_requests` at once to match OLLAMA_NUM_PARALLEL."""
 
     def __init__(self, host: str, model: str, options: dict, session: requests.Session | None = None):
         self.host = host.rstrip("/")
