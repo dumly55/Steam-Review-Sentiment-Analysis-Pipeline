@@ -18,7 +18,7 @@ def _rows(conn: psycopg.Connection, query: str, params: tuple) -> list[dict]:
 
 def run_summary(conn: psycopg.Connection, run_id: int) -> dict | None:
     rows = _rows(conn, """SELECT r.run_id, r.app_id, g.name AS game, g.is_synthetic, r.status, r.cutoff_at,
-                                 r.created_at, r.started_at, r.finished_at, r.error,
+                                 r.created_at, r.started_at, r.finished_at, r.error, r.cancel_requested_at,
                                  r.config -> 'analysis' ->> 'model' AS model,
                                  r.config -> 'analysis' -> 'max_items_per_source' AS max_items
                           FROM runs r JOIN games g USING (app_id) WHERE r.run_id = %s""", (run_id,))

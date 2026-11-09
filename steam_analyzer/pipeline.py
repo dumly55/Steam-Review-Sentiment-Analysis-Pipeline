@@ -41,6 +41,10 @@ ACTIVE_STATUSES = ("collecting", "analyzing", "aggregating")
 MakeExtractor = Callable[[dict], Extractor]  # run config -> extractor
 
 
+class RunCancelled(Exception):
+    """Raised at a check point after someone asked to cancel the run."""
+
+
 @dataclass(frozen=True)
 class RunUpdate:
     run_id: int
@@ -86,11 +90,13 @@ def process_run(conn: psycopg.Connection, run_id: int, sources: Sources, make_ex
     if row is None:
         raise RunError(f"Run {run_id} does not exist.")
     app_id, status, config = row
-    if status in ("completed", "cancelled"):
+    if status == "completed":
         return status
     if not conn.execute("SELECT pg_try_advisory_lock(%s, %s)", (LOCK_CLASS, app_id)).fetchone()[0]:
         conn.rollback()
         raise RunError("Another run for this game is already being processed.")
+    if status == "cancelled":  # resuming: the old request must not stop the new worker
+        conn.execute("UPDATE runs SET cancel_requested_at = NULL WHERE run_id = %s", (run_id,))
     conn.commit()
     analysis = config["analysis"]
     try:
@@ -108,6 +114,10 @@ def process_run(conn: psycopg.Connection, run_id: int, sources: Sources, make_ex
         _log_results(conn, run_id)
         _set_status(conn, run_id, final, finished=True)
         return final
+    except (RunCancelled, KeyboardInterrupt):  # Ctrl+C in a terminal counts as a cancel
+        conn.rollback()
+        _set_status(conn, run_id, "cancelled", finished=True)
+        return "cancelled"
     except Exception as exc:
         conn.rollback()
         log.exception("run %d failed", run_id)
@@ -117,6 +127,18 @@ def process_run(conn: psycopg.Connection, run_id: int, sources: Sources, make_ex
         conn.rollback()
         conn.execute("SELECT pg_advisory_unlock(%s, %s)", (LOCK_CLASS, app_id))
         conn.commit()
+
+
+def request_cancel(conn: psycopg.Connection, run_id: int) -> None:
+    """Ask the worker to stop at its next check: before each analyzed item and between collected sources."""
+    conn.execute("UPDATE runs SET cancel_requested_at = COALESCE(cancel_requested_at, now()) WHERE run_id = %s",
+                 (run_id,))
+    conn.commit()
+
+
+def _check_cancel(conn: psycopg.Connection, run_id: int) -> None:
+    if conn.execute("SELECT cancel_requested_at IS NOT NULL FROM runs WHERE run_id = %s", (run_id,)).fetchone()[0]:
+        raise RunCancelled
 
 
 def worker_active(conn: psycopg.Connection, app_id: int) -> bool:
@@ -184,6 +206,7 @@ def _collect(conn: psycopg.Connection, app_id: int, ru: RunUpdate, sources: Sour
     limits = dict(max_items=analysis.get("max_items_per_source"), max_pages=settings["max_pages"],
                   page_delay=settings["page_delay_seconds"], sleep=sleep)
 
+    _check_cancel(conn, ru.run_id)
     source_id = _source_row(conn, ru, "review", None, None)
     collect_reviews(conn, source_id, app_id, ru.window_start, ru.window_end, sources.fetch_reviews, **limits)
 
@@ -196,6 +219,7 @@ def _collect(conn: psycopg.Connection, app_id: int, ru: RunUpdate, sources: Sour
             _source_row(conn, ru, "comment", event_gid, None, "unavailable",
                         "This announcement post has no linked comment thread.")
             continue
+        _check_cancel(conn, ru.run_id)
         source_id = _source_row(conn, ru, "comment", event_gid, thread_id)
         collect_comments(conn, source_id, app_id, thread_id, event_gid, sources.fetch_comment_page, **limits)
 
@@ -257,6 +281,7 @@ def _analyze(conn: psycopg.Connection, app_id: int, ru: RunUpdate, analysis: dic
         # map() yields in input order, so results are stored and committed one by one on this thread.
         for i, ((source_type, item_id, _, text_hash), key, result) in enumerate(
                 zip(pending, keys, pool.map(ask, zip(pending, keys))), 1):
+            _check_cancel(conn, ru.run_id)  # at most the requests already in flight are discarded
             if result is None:
                 assessment_id, status, cached = hits[key], "succeeded", True
             else:

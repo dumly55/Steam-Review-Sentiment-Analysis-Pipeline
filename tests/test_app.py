@@ -102,3 +102,26 @@ def test_results_preview_shows_labels_counts_and_denominators(app):
     reasons = next(d.value for d in at.dataframe if "Feature" in d.value.columns)
     assert reasons.iloc[0]["Authors"] == "1 of 1 analyzed authors (100%)"
     assert reasons.iloc[0]["Example"] == "The new update broke matchmaking"
+
+
+def test_progress_cancel_and_resume_controls(app):
+    at, conn = app
+    update_id = conn.execute("SELECT update_id FROM updates WHERE app_id = %s AND title = 'Update 1.1.0'",
+                             (TEST_APP,)).fetchone()[0]
+    run_id = real_create_run(conn, TEST_APP, [update_id], None, analysis=quick_analysis())
+    with psycopg.connect(DATABASE_URL) as worker:
+        worker.execute("SELECT pg_advisory_lock(771, %s)", (TEST_APP,))  # looks like a busy worker
+        at.run()
+        assert not at.exception
+        progress = next(d.value for d in at.dataframe if "Collection" in d.value.columns)
+        assert progress.iloc[0]["Update"] == "Update 1.1.0" and progress.iloc[0]["Collection"] == "not started"
+
+        at.button(key=f"cancel_{run_id}").click().run()
+        assert not at.exception
+        assert conn.execute("SELECT cancel_requested_at IS NOT NULL FROM runs WHERE run_id = %s",
+                            (run_id,)).fetchone()[0]
+        assert any("Cancelling" in i.value for i in at.info)
+
+    at.run()  # the worker is gone and the run never finished: offer to resume it
+    assert not at.exception
+    assert at.button(key=f"resume_{run_id}")

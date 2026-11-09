@@ -95,6 +95,8 @@ def main(argv: list[str] | None = None) -> int:
     run.add_argument("--max-items", type=int, help="cap items collected per source (the result is labeled partial)")
     process = sub.add_parser("process", help="process or resume an existing run")
     process.add_argument("run_id", type=int)
+    cancel = sub.add_parser("cancel", help="ask a running run to stop; finished work is kept and it can be resumed")
+    cancel.add_argument("run_id", type=int)
     show = sub.add_parser("results", help="print a run's results")
     show.add_argument("run_id", type=int)
     sub.add_parser("demo", help="load the SYNTHETIC demo game and run it end to end (no Steam or Ollama needed)")
@@ -139,6 +141,11 @@ def main(argv: list[str] | None = None) -> int:
         elif args.command == "process":
             run_id = args.run_id
             pipeline.process(conn, run_id, settings)
+        elif args.command == "cancel":
+            pipeline.request_cancel(conn, args.run_id)
+            print(f"Cancel requested. Run {args.run_id} stops after the item it is working on; "
+                  f"resume it with: python -m steam_analyzer process {args.run_id}")
+            return 0
         elif args.command == "demo":
             from steam_analyzer import demo
             from steam_analyzer.runs import create_run

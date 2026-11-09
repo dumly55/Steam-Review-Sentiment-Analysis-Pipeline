@@ -213,7 +213,31 @@ def reasons_table(rows: list[dict]) -> pd.DataFrame:
 REASON_COLUMNS = {"Source": st.column_config.LinkColumn("Source", display_text="Open")}
 
 
-def show_run(run_id: int) -> None:
+def progress_table(updates: list[dict], detail: dict) -> pd.DataFrame:
+    """One row per update and source: how far collection and analysis have got."""
+    rows = []
+    for u in updates:
+        sources = detail[u["update_id"]][0]
+        if not sources:
+            rows.append({"Update": u["title"], "Collection": "not started"})
+        for s in sources:
+            rows.append({
+                "Update": u["title"],
+                "Source": res.SOURCE_LABELS[s["source_type"]],
+                "Collection": s["collection_status"],
+                "Collected": s["collected"],
+                "Excluded": s["excluded"],
+                "Eligible": s["eligible"],
+                "Cache hits": s["cache_hits"],
+                "Analyzed": s["analyzed"],
+                "Failed": s["failed"],
+                "Pending": s["pending"],
+                "Done": (s["analyzed"] + s["failed"]) / s["eligible"] if s["eligible"] else None,
+            })
+    return pd.DataFrame(rows)
+
+
+def show_run(run_id: int, was_active: bool = False) -> None:
     with connect() as conn:
         run = res.run_summary(conn, run_id)
         active = pipeline.worker_active(conn, run["app_id"])
@@ -224,6 +248,8 @@ def show_run(run_id: int) -> None:
                                                     ("tentative", "general", "unrelated")))
                                     for s in ("review", "comment")})
                   for u in updates}
+    if was_active and not active:
+        st.rerun()  # the worker just finished: redraw the whole page, not only this panel
 
     st.subheader(f"Run #{run_id} · {run['status']}")
     st.caption(f"Cutoff {fmt(run['cutoff_at'])} · model {run['model']} · created {fmt(run['created_at'])}"
@@ -233,17 +259,28 @@ def show_run(run_id: int) -> None:
     if run["max_items"] is not None:
         st.warning(f"Capped at {run['max_items']} items per source: collection is incomplete, so no source "
                    "can receive a reception label.")
-    unfinished = run["status"] in ("queued", *pipeline.ACTIVE_STATUSES, "failed")
+    unfinished = run["status"] in ("queued", *pipeline.ACTIVE_STATUSES, "failed", "cancelled")
     if run["status"] == "failed":
         st.error(f"The run stopped: {run['error']}")
     if unfinished and active:
-        st.info(f"Processing in the background (log: data/logs/run_{run_id}.log). Results below fill in as it goes.")
-        st.button("Refresh status", key="refresh_status")
+        if run["cancel_requested_at"]:
+            st.info("Cancelling: the run stops after the items it is working on.")
+        else:
+            st.info(f"Processing in the background (log: data/logs/run_{run_id}.log). This panel updates "
+                    "every few seconds.")
+            if st.button("Cancel run", key=f"cancel_{run_id}"):
+                with connect() as conn:
+                    pipeline.request_cancel(conn, run_id)
+                st.rerun()
     elif unfinished:
         st.warning("This run is not being processed right now. Finished work is kept; resuming continues from there.")
         if st.button("Resume run", key=f"resume_{run_id}"):
             pipeline.launch_worker(run_id)
             st.rerun()
+    if unfinished:
+        st.dataframe(progress_table(updates, detail), hide_index=True, width="stretch", column_config={
+            "Done": st.column_config.ProgressColumn("Done", help="Analyzed or failed, out of eligible items",
+                                                    min_value=0.0, max_value=1.0, format="percent")})
 
     for u in updates:
         sources, by_source = detail[u["update_id"]]
@@ -275,6 +312,8 @@ def show_run(run_id: int) -> None:
                             st.dataframe(frame, hide_index=True, width="stretch", column_config=REASON_COLUMNS)
 
 
+live_run = st.fragment(run_every=3)(show_run)  # re-reads progress every 3 s while a worker is busy
+
 st.divider()
 st.header("Runs")
 with connect() as conn:
@@ -287,4 +326,5 @@ else:
     labels = {run_id: f"Run #{run_id} · {status} · created {fmt(created)}" for run_id, status, created in recent}
     if state.get("run_picker") not in ids:  # e.g. after switching between demo and real data
         state.pop("run_picker", None)
-    show_run(st.selectbox("Show run", ids, format_func=labels.get, key="run_picker"))
+    picked = st.selectbox("Show run", ids, format_func=labels.get, key="run_picker")
+    (live_run if busy else show_run)(picked, busy)

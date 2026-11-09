@@ -97,7 +97,8 @@ CREATE TABLE IF NOT EXISTS runs (
     timeline_snapshot   JSONB NOT NULL,   -- every release and its time, not only the selected ones
     started_at          TIMESTAMPTZ,      -- first time a worker picked the run up
     finished_at         TIMESTAMPTZ,
-    error               TEXT
+    error               TEXT,
+    cancel_requested_at TIMESTAMPTZ       -- set by Cancel; the worker stops at its next check
 );
 
 CREATE TABLE IF NOT EXISTS run_updates (
@@ -258,7 +259,8 @@ ALTER TABLE games ADD COLUMN IF NOT EXISTS is_synthetic BOOLEAN NOT NULL DEFAULT
 ALTER TABLE runs
     ADD COLUMN IF NOT EXISTS started_at TIMESTAMPTZ,
     ADD COLUMN IF NOT EXISTS finished_at TIMESTAMPTZ,
-    ADD COLUMN IF NOT EXISTS error TEXT;
+    ADD COLUMN IF NOT EXISTS error TEXT,
+    ADD COLUMN IF NOT EXISTS cancel_requested_at TIMESTAMPTZ;
 ALTER TABLE run_updates
     ADD COLUMN IF NOT EXISTS notes_context TEXT,
     ADD COLUMN IF NOT EXISTS notes_truncated BOOLEAN NOT NULL DEFAULT FALSE;

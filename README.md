@@ -79,14 +79,17 @@ python -m steam_analyzer preflight   # PostgreSQL, Ollama model, GPU
 python -m steam_analyzer smoke       # small live check of Steam reviews, release events and comments
 python -m steam_analyzer catalog     # refresh the release catalog and list every release with its window and id
 python -m steam_analyzer run 94      # analyze update #94 (ids from `catalog`); add --max-items 50 for a quick capped test
-python -m steam_analyzer process 12  # resume run 12 after Ctrl+C or a failure; finished work is kept
+python -m steam_analyzer cancel 12   # ask run 12 to stop after the items it is working on
+python -m steam_analyzer process 12  # resume run 12 after a cancel, Ctrl+C or a failure; finished work is kept
 python -m steam_analyzer results 12  # print run 12's labels, counts and leading reasons
 python -m steam_analyzer demo        # run the SYNTHETIC demo end to end in seconds (no Steam or Ollama needed)
 pytest                               # database tests use synthetic data and clean up after themselves
 streamlit run steam_analyzer/app.py  # control panel
 ```
 
-A full window is large: a typical Helldivers 2 update has 1,000–3,000 English reviews plus hundreds of comments, and `qwen3:8b` on an RTX 3080 takes roughly 1–3 seconds per item once loaded, so one update can take one to two hours. Run analysis in the control panel starts a background worker and the page shows its progress; the log is in `data/logs/run_<id>.log`.
+A full window is large: a typical Helldivers 2 update has 1,000–3,000 English reviews plus hundreds of comments, and `qwen3:8b` on an RTX 3080 takes roughly 1–3 seconds per item once loaded, so one update can take about an hour (less with the two-request Ollama settings in Setup). Run analysis in the control panel starts a background worker, and the run panel refreshes every few seconds with a progress table for each selected update: collection status, collected, excluded, eligible, cache hits, analyzed, failed and pending. The log is in `data/logs/run_<id>.log`.
+
+**Cancel and resume.** Cancel (in the panel or with the `cancel` command) stops the worker at its next check: between collected sources, and before each analysis result is stored. The one or two items already being analyzed finish and are discarded, so a cancel takes a few seconds. The run is marked `cancelled`. Everything stored so far is kept: collected pages, eligibility decisions and every stored analysis. Resume starts from the checkpoints and only analyzes items that are still pending, so nothing is collected or analyzed twice. Ctrl+C in a terminal does the same as Cancel.
 
 ## How updates and feedback windows work
 
@@ -216,7 +219,7 @@ Put it in your client's user-level config so the password stays out of the repo.
 - [x] Review and update-page comment collectors with checkpoints
 - [x] Local LLM feature and sentiment extraction with validation and a durable cache
 - [x] SQL aggregation and reception labels, with a results preview and a synthetic demo
-- [ ] Multi-update runs: detailed progress, cancellation and resume from the control panel
+- [x] Multi-update runs: progress by update and source, cancellation and resume from the control panel
 - [ ] Power BI reporting views and report
 - [ ] Human-labeled validation set and measured model accuracy
 

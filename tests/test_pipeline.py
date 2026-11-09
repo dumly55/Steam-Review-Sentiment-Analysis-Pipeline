@@ -17,7 +17,7 @@ from steam_analyzer.collectors import Sources
 from steam_analyzer.db import init_db
 from steam_analyzer.demo import DemoComment, ScriptedExtractor, render_comment_page
 from steam_analyzer.extraction import ExtractorUnavailable
-from steam_analyzer.pipeline import process_run
+from steam_analyzer.pipeline import process_run, request_cancel
 from steam_analyzer.runs import create_run
 from steam_analyzer.steam_sources import STEAMID64_BASE
 
@@ -235,6 +235,60 @@ def test_repeating_the_run_reuses_every_assessment_and_counts_the_same(processed
     assert conn.execute("SELECT count(*) FROM ai_assessments WHERE app_id = %s AND status = 'succeeded'",
                         (TEST_APP,)).fetchone()[0] == assessments
     assert conn.execute("SELECT count(*) FROM feedback_items WHERE app_id = %s", (TEST_APP,)).fetchone()[0] == 25
+
+
+def test_changed_text_is_analyzed_again_while_the_rest_comes_from_the_cache(processed):  # AC14
+    conn, scenario, new_run, first = processed
+    assessments = conn.execute("SELECT count(*) FROM ai_assessments WHERE app_id = %s", (TEST_APP,)).fetchone()[0]
+    edited = next(r for r in scenario.reviews if r["recommendationid"] == "B")
+    edited.update(review="Scope nerf ruined it. Still true a day later.", timestamp_updated=START + DAY)
+    second = new_run()
+    assert process_run(conn, second, scenario.sources(), scenario.extractor) == "completed"
+    fresh = conn.execute("SELECT source_item_id FROM run_feedback WHERE run_id = %s AND eligibility = 'eligible'"
+                         " AND NOT cache_hit", (second,)).fetchall()
+    assert sorted(fresh) == [("B",), ("F",)]  # F's scripted answer never validates, so it is never cached
+    assert conn.execute("SELECT count(*) FROM ai_assessments WHERE app_id = %s", (TEST_APP,)).fetchone()[0] \
+        == assessments + 2
+
+
+def eligible_counts(conn, run_id):
+    return conn.execute("""SELECT count(*), count(*) FILTER (WHERE analysis_status <> 'pending') FROM run_feedback
+                           WHERE run_id = %s AND eligibility = 'eligible'""", (run_id,)).fetchone()
+
+
+def test_cancel_keeps_finished_work_and_resume_adds_no_duplicates(setup):  # AC15
+    conn, scenario, new_run, _ = setup
+    run_id = new_run()
+    calls = []
+
+    class CancelledDuringThirdCall(ScriptedExtractor):
+        def complete(self, messages, schema):
+            calls.append(1)
+            if len(calls) == 3:
+                with psycopg.connect(DATABASE_URL) as other:  # as the control panel would
+                    request_cancel(other, run_id)
+            return super().complete(messages, schema)
+
+    cancelling = lambda c: CancelledDuringThirdCall(scenario.answers, c["analysis"]["extraction"]["max_feedback_chars"])
+    assert process_run(conn, run_id, scenario.sources(), cancelling) == "cancelled"
+    eligible, done = eligible_counts(conn, run_id)
+    assert 0 < done < eligible
+    assert conn.execute("SELECT finished_at IS NOT NULL FROM runs WHERE run_id = %s", (run_id,)).fetchone()[0]
+
+    assert process_run(conn, run_id, scenario.sources(), scenario.extractor) == "completed"
+    assert eligible_counts(conn, run_id) == (eligible, eligible)
+    # One assessment per eligible item: nothing analyzed before the cancel was analyzed again.
+    assert conn.execute("SELECT count(*) FROM ai_assessments WHERE app_id = %s", (TEST_APP,)).fetchone()[0] == eligible
+    assert conn.execute("SELECT count(*) FROM feedback_items WHERE app_id = %s", (TEST_APP,)).fetchone()[0] == 25
+
+
+def test_a_run_cancelled_before_it_starts_collects_nothing_and_can_resume(setup):
+    conn, scenario, new_run, _ = setup
+    run_id = new_run()
+    request_cancel(conn, run_id)
+    assert process_run(conn, run_id, scenario.sources(), scenario.extractor) == "cancelled"
+    assert conn.execute("SELECT count(*) FROM run_feedback WHERE run_id = %s", (run_id,)).fetchone()[0] == 0
+    assert process_run(conn, run_id, scenario.sources(), scenario.extractor) == "completed"
 
 
 def test_a_run_stopped_by_an_unreachable_model_resumes_where_it_stopped(setup):
