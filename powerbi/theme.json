@@ -1,0 +1,10 @@
+{
+  "name": "Steam Update Reactions",
+  "dataColors": ["#0072B2", "#D55E00", "#CC79A7", "#8A8A8A", "#009E73", "#E69F00", "#56B4E9", "#F0E442"],
+  "good": "#0072B2",
+  "neutral": "#8A8A8A",
+  "bad": "#D55E00",
+  "background": "#FFFFFF",
+  "foreground": "#1F2933",
+  "tableAccent": "#0072B2"
+}
