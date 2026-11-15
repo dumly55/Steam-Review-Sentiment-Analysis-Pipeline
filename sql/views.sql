@@ -6,7 +6,9 @@
 -- changes an existing run. Each view states its grain; never join two views at different grains and
 -- then count rows.
 
-DROP VIEW IF EXISTS v_latest_update_results, v_update_reception, v_feature_reasons, v_source_reception,
+DROP VIEW IF EXISTS pbi_patch_changes, pbi_evidence, pbi_daily_feedback, pbi_features, pbi_source_results,
+    pbi_sources, pbi_updates,
+    v_latest_update_results, v_update_reception, v_feature_reasons, v_source_reception,
     v_author_reactions, v_feature_authors, v_observations, v_run_feedback CASCADE;
 
 -- Grain: one row per run membership (run, update, source, item).
@@ -25,7 +27,8 @@ LEFT JOIN ai_assessments a ON a.assessment_id = rf.assessment_id AND a.status = 
 -- tier: patch_related = explicit update reaction, or plausibly related with a linked patch change;
 --       tentative = plausibly related without a linked change; general; unrelated.
 CREATE VIEW v_observations AS
-SELECT rf.run_id, rf.update_id, rf.source_type, rf.source_item_id, rf.author_id, rf.permalink, rf.created_at,
+SELECT rf.run_id, rf.update_id, rf.source_type, rf.source_item_id, o.position, rf.author_id, rf.permalink,
+       rf.created_at,
        COALESCE(r.config #>> ARRAY['analysis', 'feature_aliases', o.feature_key], o.feature_key) AS feature_key,
        o.category, o.sentiment, o.relevance, o.change_id, o.evidence,
        CASE WHEN o.relevance = 'explicit_update'
@@ -298,3 +301,83 @@ SELECT DISTINCT ON (update_id) *
 FROM v_update_reception
 WHERE run_status IN ('completed', 'partial')
 ORDER BY update_id, run_id DESC;
+
+-- ---------------------------------------------------------------------------
+-- Power BI views (pbi_*): the stable contract the report imports. Each holds only the latest completed
+-- or partial run of every update, so update_id alone is the key and relationships need one column.
+-- Timestamps are plain UTC (*_utc). Author counts come from SQL: never add them up across updates or
+-- sources in the report, because one person can post in several windows and in both sources.
+-- ---------------------------------------------------------------------------
+
+-- Grain: one row per update with a finished run. Dimension table.
+CREATE VIEW pbi_updates AS
+SELECT l.update_id, l.run_id, g.name AS game,
+       CASE WHEN g.is_synthetic THEN 'Synthetic demo' ELSE 'Live Steam data' END AS data_kind,
+       l.title, l.version, u.release_type,
+       l.window_start AT TIME ZONE 'UTC' AS window_start_utc,
+       l.window_end AT TIME ZONE 'UTC' AS window_end_utc,
+       l.window_status, l.as_of AT TIME ZONE 'UTC' AS as_of_utc, l.run_status,
+       EXISTS (SELECT 1 FROM run_sources s WHERE s.run_id = l.run_id AND s.update_id = l.update_id AND s.capped)
+           AS capped_sample,
+       l.overall_label, l.basis, l.reviews_label, l.comments_label,
+       array_to_string(l.caveats, ' ') AS caveats
+FROM v_latest_update_results l
+JOIN updates u ON u.update_id = l.update_id
+JOIN games g ON g.app_id = u.app_id;
+
+-- Grain: one row per source. Dimension table, so one slicer filters every source-level table.
+CREATE VIEW pbi_sources AS
+SELECT * FROM (VALUES ('review', 'Steam reviews', 1), ('comment', 'Update-page comments', 2))
+    AS s (source_type, source_name, sort_order);
+
+-- Grain: one row per (update, source). Label, populations, coverage, exclusions and collection status.
+CREATE VIEW pbi_source_results AS
+SELECT s.*
+FROM v_source_reception s
+JOIN pbi_updates p USING (run_id, update_id);
+
+-- Grain: one row per (update, source, tier, feature). share = authors / analyzed_authors of that source.
+CREATE VIEW pbi_features AS
+SELECT f.*, c.text AS change_text
+FROM v_feature_reasons f
+JOIN pbi_updates p USING (run_id, update_id)
+LEFT JOIN run_note_changes c USING (run_id, update_id, change_id);
+
+-- Grain: one row per (update, source, day_number) with eligible feedback. Day 0 is the first 24 hours
+-- after the release, so several updates line up on one axis. These are item counts, not people.
+CREATE VIEW pbi_daily_feedback AS
+SELECT update_id, source_type, day_number,
+       (window_start + day_number * interval '1 day') AT TIME ZONE 'UTC' AS day_start_utc,
+       count(*) AS eligible_items,
+       count(*) FILTER (WHERE analysis_status = 'succeeded') AS analyzed_items,
+       count(*) FILTER (WHERE analysis_status = 'failed') AS failed_items,
+       count(*) FILTER (WHERE overall_sentiment = 'positive') AS text_positive,
+       count(*) FILTER (WHERE overall_sentiment = 'negative') AS text_negative,
+       count(*) FILTER (WHERE overall_sentiment = 'mixed') AS text_mixed,
+       count(*) FILTER (WHERE overall_sentiment IN ('neutral', 'unclear')) AS text_neutral_unclear,
+       count(*) FILTER (WHERE voted_up) AS recommended,
+       count(*) FILTER (WHERE NOT voted_up) AS not_recommended
+FROM (SELECT f.*, ru.window_start,
+             floor(extract(epoch FROM f.created_at - ru.window_start) / 86400)::int AS day_number
+      FROM v_run_feedback f
+      JOIN pbi_updates p USING (run_id, update_id)
+      JOIN run_updates ru USING (run_id, update_id)
+      WHERE f.eligibility = 'eligible') d
+GROUP BY update_id, source_type, day_number, window_start;
+
+-- Grain: one row per feature observation (update, source, item, position). Quotes for drill-down:
+-- counting these rows counts mentions, not people.
+CREATE VIEW pbi_evidence AS
+SELECT o.update_id, o.source_type, o.source_item_id, o.position, o.feature_key, o.category, o.sentiment,
+       o.relevance, o.tier, o.change_id, c.text AS change_text, o.evidence, o.permalink,
+       o.author_id IS NOT NULL AS author_known,
+       o.created_at AT TIME ZONE 'UTC' AS created_at_utc
+FROM v_observations o
+JOIN pbi_updates p USING (run_id, update_id)
+LEFT JOIN run_note_changes c USING (run_id, update_id, change_id);
+
+-- Grain: one row per (update, change): the patch-note changes the model was given, in note order.
+CREATE VIEW pbi_patch_changes AS
+SELECT c.update_id, c.change_id, substring(c.change_id FROM 2)::int AS change_number, c.section, c.text
+FROM run_note_changes c
+JOIN pbi_updates p USING (run_id, update_id);
