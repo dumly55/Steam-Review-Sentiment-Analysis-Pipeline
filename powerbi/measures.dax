@@ -1,0 +1,118 @@
+// DAX measures for the Power BI report. Setup steps: docs/power_bi.md.
+// Paste this whole file into DAX query view, click Run, then "Update model with changes".
+//
+// SQL computes every author count. Author measures return a value only when the visual narrows to one
+// row of their view (one update and one source), because the same person can post in several update
+// windows and in both sources, so distinct people cannot be added together. Item counts can be added.
+
+DEFINE
+    // ---- pbi_updates: one row per update ----
+    MEASURE pbi_updates[Updates] = COUNTROWS ( pbi_updates )
+    MEASURE pbi_updates[Selected update] =
+        SELECTEDVALUE ( pbi_updates[title], "Select one update" )
+    MEASURE pbi_updates[Overall label] =
+        SELECTEDVALUE ( pbi_updates[overall_label], "Select one update" )
+    MEASURE pbi_updates[Overall label color] =
+        SWITCH (
+            SELECTEDVALUE ( pbi_updates[overall_label] ),
+            "Positive", "#0072B2",
+            "Negative", "#D55E00",
+            "Mixed", "#CC79A7",
+            "#8A8A8A"
+        )
+    MEASURE pbi_updates[Data notice] =
+        IF (
+            "Synthetic demo" IN VALUES ( pbi_updates[data_kind] ),
+            "Includes the synthetic demo game: invented data, not real player feedback",
+            "Live Steam data"
+        )
+
+    // ---- pbi_source_results: one row per update and source ----
+    MEASURE pbi_source_results[Eligible items] = SUM ( pbi_source_results[eligible] )
+    MEASURE pbi_source_results[Analyzed items] = SUM ( pbi_source_results[analyzed] )
+    MEASURE pbi_source_results[Failed items] = SUM ( pbi_source_results[failed] )
+    MEASURE pbi_source_results[Excluded items] = SUM ( pbi_source_results[excluded] )
+    MEASURE pbi_source_results[Analysis coverage] =
+        DIVIDE ( [Analyzed items], [Eligible items] )
+    MEASURE pbi_source_results[Cache hit rate] =
+        DIVIDE ( SUM ( pbi_source_results[cache_hits] ), [Eligible items] )
+    MEASURE pbi_source_results[Steam recommendation share] =
+        DIVIDE ( SUM ( pbi_source_results[recommended] ), SUM ( pbi_source_results[with_recommendation] ) )
+    MEASURE pbi_source_results[Analyzed authors] =
+        IF ( COUNTROWS ( pbi_source_results ) = 1, SUM ( pbi_source_results[analyzed_authors] ) )
+    MEASURE pbi_source_results[Qualifying authors] =
+        IF ( COUNTROWS ( pbi_source_results ) = 1, SUM ( pbi_source_results[qualifying_update_authors] ) )
+    MEASURE pbi_source_results[Positive authors %] =
+        IF (
+            COUNTROWS ( pbi_source_results ) = 1,
+            DIVIDE ( SUM ( pbi_source_results[positive_authors] ), SUM ( pbi_source_results[qualifying_update_authors] ) )
+        )
+    MEASURE pbi_source_results[Negative authors %] =
+        IF (
+            COUNTROWS ( pbi_source_results ) = 1,
+            DIVIDE ( SUM ( pbi_source_results[negative_authors] ), SUM ( pbi_source_results[qualifying_update_authors] ) )
+        )
+    MEASURE pbi_source_results[Mixed authors %] =
+        IF (
+            COUNTROWS ( pbi_source_results ) = 1,
+            DIVIDE ( SUM ( pbi_source_results[mixed_authors] ), SUM ( pbi_source_results[qualifying_update_authors] ) )
+        )
+    MEASURE pbi_source_results[Source label] =
+        SELECTEDVALUE ( pbi_source_results[label], "Select one update and source" )
+    MEASURE pbi_source_results[Source label color] =
+        SWITCH (
+            SELECTEDVALUE ( pbi_source_results[label] ),
+            "Positive", "#0072B2",
+            "Negative", "#D55E00",
+            "Mixed", "#CC79A7",
+            "#8A8A8A"
+        )
+
+    // ---- pbi_features: one row per update, source, tier and feature ----
+    MEASURE pbi_features[Feature authors] =
+        IF ( COUNTROWS ( pbi_features ) = 1, SUM ( pbi_features[authors] ) )
+    MEASURE pbi_features[Praise authors] =
+        IF ( COUNTROWS ( pbi_features ) = 1, SUM ( pbi_features[positive_authors] ) )
+    MEASURE pbi_features[Criticism authors] =
+        IF ( COUNTROWS ( pbi_features ) = 1, SUM ( pbi_features[negative_authors] ) )
+    MEASURE pbi_features[Divided authors] =
+        IF ( COUNTROWS ( pbi_features ) = 1, SUM ( pbi_features[mixed_authors] ) )
+    MEASURE pbi_features[Mention share] =
+        IF ( COUNTROWS ( pbi_features ) = 1, SUM ( pbi_features[share] ) )
+    MEASURE pbi_features[Share with denominator] =
+        IF (
+            COUNTROWS ( pbi_features ) = 1,
+            FORMAT ( SUM ( pbi_features[authors] ), "0" ) & " of "
+                & FORMAT ( SUM ( pbi_features[analyzed_authors] ), "0" ) & " analyzed authors ("
+                & FORMAT ( SUM ( pbi_features[share] ), "0%" ) & ")"
+        )
+
+    // ---- pbi_daily_feedback: one row per update, source and day since release (items, not people) ----
+    MEASURE pbi_daily_feedback[Items] = SUM ( pbi_daily_feedback[eligible_items] )
+    MEASURE pbi_daily_feedback[Cumulative items] =
+        VAR lastDay = MAX ( pbi_daily_feedback[day_number] )
+        RETURN CALCULATE ( [Items], pbi_daily_feedback[day_number] <= lastDay )
+    MEASURE pbi_daily_feedback[Positive text share] =
+        DIVIDE ( SUM ( pbi_daily_feedback[text_positive] ), SUM ( pbi_daily_feedback[analyzed_items] ) )
+    MEASURE pbi_daily_feedback[Negative text share] =
+        DIVIDE ( SUM ( pbi_daily_feedback[text_negative] ), SUM ( pbi_daily_feedback[analyzed_items] ) )
+    MEASURE pbi_daily_feedback[Daily recommendation share] =
+        DIVIDE (
+            SUM ( pbi_daily_feedback[recommended] ),
+            SUM ( pbi_daily_feedback[recommended] ) + SUM ( pbi_daily_feedback[not_recommended] )
+        )
+
+    // ---- pbi_evidence: one row per quoted observation (mentions, not people) ----
+    MEASURE pbi_evidence[Quotes] = COUNTROWS ( pbi_evidence )
+
+// A quick check: one row per update and source, so the author measures show values.
+EVALUATE
+    SUMMARIZECOLUMNS (
+        pbi_updates[title],
+        pbi_sources[source_name],
+        "Label", [Source label],
+        "Eligible items", [Eligible items],
+        "Coverage", [Analysis coverage],
+        "Qualifying authors", [Qualifying authors],
+        "Positive authors %", [Positive authors %]
+    )
