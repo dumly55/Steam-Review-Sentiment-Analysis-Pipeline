@@ -251,6 +251,40 @@ def test_changed_text_is_analyzed_again_while_the_rest_comes_from_the_cache(proc
         == assessments + 2
 
 
+PBI_KEYS = {"pbi_updates": "update_id", "pbi_source_results": "update_id, source_type",
+            "pbi_features": "update_id, source_type, tier, feature_key",
+            "pbi_daily_feedback": "update_id, source_type, day_number",
+            "pbi_evidence": "update_id, source_type, source_item_id, position",
+            "pbi_patch_changes": "update_id, change_id"}
+
+
+def test_power_bi_views_hold_the_latest_finished_run_once_per_key(processed):  # AC16
+    conn, scenario, new_run, _ = processed
+    latest = new_run()
+    assert process_run(conn, latest, scenario.sources(), scenario.extractor) == "completed"
+    new_run()  # queued, never processed: must not replace the finished run
+    update_id = conn.execute("SELECT update_id FROM run_updates WHERE run_id = %s", (latest,)).fetchone()[0]
+    assert conn.execute("SELECT run_id FROM pbi_updates WHERE update_id = %s", (update_id,)).fetchall() == [(latest,)]
+    for view, key in PBI_KEYS.items():
+        rows, keys = conn.execute(f"SELECT count(*), count(DISTINCT ({key})) FROM {view} WHERE update_id = %s",
+                                  (update_id,)).fetchone()
+        assert rows == keys > 0, view
+
+    # Totals match the run views, so nothing is dropped or counted twice on the way to the report.
+    daily = conn.execute("""SELECT source_type, sum(eligible_items), sum(analyzed_items), sum(text_positive),
+                                   min(day_number)
+                            FROM pbi_daily_feedback WHERE update_id = %s GROUP BY 1 ORDER BY 1""",
+                         (update_id,)).fetchall()
+    assert daily == conn.execute("""SELECT source_type, eligible, analyzed, text_positive, 0 FROM v_source_reception
+                                    WHERE run_id = %s ORDER BY 1""", (latest,)).fetchall()
+    for view, run_view in (("pbi_evidence", "v_observations"), ("pbi_features", "v_feature_reasons")):
+        assert conn.execute(f"SELECT count(*) FROM {view} WHERE update_id = %s", (update_id,)).fetchone() \
+            == conn.execute(f"SELECT count(*) FROM {run_view} WHERE run_id = %s", (latest,)).fetchone(), view
+    assert conn.execute("""SELECT authors, analyzed_authors, change_text FROM pbi_features WHERE update_id = %s
+                           AND source_type = 'review' AND tier = 'patch_related' AND feature_key = 'scope'""",
+                        (update_id,)).fetchone() == (3, 5, "Scope zoom reduced.")
+
+
 def eligible_counts(conn, run_id):
     return conn.execute("""SELECT count(*), count(*) FILTER (WHERE analysis_status <> 'pending') FROM run_feedback
                            WHERE run_id = %s AND eligibility = 'eligible'""", (run_id,)).fetchone()
