@@ -187,11 +187,28 @@ with st.expander(f"Announcements not treated as releases ({len(catalog.non_relea
 
 # --- Run results -----------------------------------------------------------------------------------
 
+def pct(x) -> str:
+    return f"{x:.1%}" if x is not None else "—"
+
+
+def source_cards(sources: list[dict]) -> None:
+    """One card per source: its label and the numbers behind it."""
+    for column, s in zip(st.columns(len(sources)), sources):
+        with column.container(border=True):
+            st.markdown(f"**{res.SOURCE_LABELS[s['source_type']]}** {badge(s['label'])}")
+            if s["insufficient_reason"]:
+                st.caption(s["insufficient_reason"])
+            eligible, coverage, qualifying = st.columns(3)
+            eligible.metric("Eligible", s["eligible"], help="Eligible feedback items in the window")
+            coverage.metric("Coverage", pct(s["coverage"]), help="Analyzed items out of eligible items")
+            qualifying.metric("Qualifying", s["qualifying_update_authors"],
+                              help="Identifiable authors with a clear opinion about this update")
+            st.caption(f"{s['positive_authors']} positive · {s['negative_authors']} negative · "
+                       f"{s['mixed_authors']} mixed")
+
+
 def source_table(sources: list[dict]) -> pd.DataFrame:
     """Metrics down the side, one column per source. Counts always sit next to their denominators."""
-    def pct(x):
-        return f"{x:.1%}" if x is not None else "—"
-
     columns = {}
     for s in sources:
         columns[res.SOURCE_LABELS[s["source_type"]]] = {
@@ -319,7 +336,9 @@ def show_run(run_id: int, was_active: bool = False) -> None:
             for caveat in u["caveats"]:
                 st.caption(f"⚠️ {caveat}")
             if sources:
-                st.dataframe(source_table(sources), width="stretch")
+                source_cards(sources)
+                with st.expander("All counts and exclusions"):
+                    st.dataframe(source_table(sources), width="stretch")
             tabs = st.tabs([res.SOURCE_LABELS[s] for s in ("review", "comment")])
             for tab, source_type in zip(tabs, ("review", "comment")):
                 principal, other = by_source[source_type]
