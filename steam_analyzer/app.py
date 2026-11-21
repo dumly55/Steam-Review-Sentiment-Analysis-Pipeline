@@ -21,7 +21,15 @@ TIME_SOURCE_LABELS = {"announcement_published": "Announcement post", "manual_ove
 SYNTHETIC_BANNER = ("**SYNTHETIC DEMO DATA.** An invented game with invented reviews and comments, analyzed by a "
                     "script instead of a model. Nothing shown here is a real finding.")
 
-st.set_page_config(page_title="Steam Update Reception", layout="wide")
+st.set_page_config(page_title="Steam Update Reception", page_icon="🎮", layout="wide")
+# Colours live in .streamlit/config.toml; this only adds the background glow and the gradient title.
+st.markdown("""<style>
+.stApp {background: radial-gradient(1100px 480px at 10% -8%, rgba(124, 58, 237, .20), transparent 60%),
+                    radial-gradient(900px 420px at 100% 0%, rgba(34, 211, 238, .10), transparent 60%), #0B0D17;}
+[data-testid="stHeader"] {background: transparent;}
+h1 {background: linear-gradient(90deg, #22D3EE, #A78BFA 55%, #F472B6); -webkit-background-clip: text;
+    background-clip: text; color: transparent !important; letter-spacing: .02em;}
+</style>""", unsafe_allow_html=True)
 state = st.session_state
 state.setdefault("selected", set())
 state.setdefault("editor_version", 0)
@@ -41,9 +49,10 @@ def reset_editor(selected: set[int]) -> None:
 
 
 st.title("Steam Update Reception Analyzer")
-st.caption(f"{'Synthetic demo game' if demo_mode else f'Steam app {APP_ID}'} · all times are UTC")
+st.caption(f"How players reacted to each game update, measured by a local AI · "
+           f"{'synthetic demo game' if demo_mode else f'Steam app {APP_ID}'} · all times are UTC")
 if demo_mode:
-    st.warning(SYNTHETIC_BANNER)
+    st.warning(SYNTHETIC_BANNER, icon="🧪")
 
 refresh_label = "Load / reset demo data" if demo_mode else "Load / refresh updates"
 if st.button(refresh_label, key="refresh"):
