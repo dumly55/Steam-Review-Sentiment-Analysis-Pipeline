@@ -1,0 +1,27 @@
+# Dark theme for the control panel (Streamlit reads this when you run it from the project folder).
+[theme]
+base = "dark"
+primaryColor = "#7C3AED"
+backgroundColor = "#0B0D17"
+secondaryBackgroundColor = "#151A2E"
+textColor = "#E5E7F0"
+linkColor = "#22D3EE"
+borderColor = "#283048"
+showWidgetBorder = true
+showSidebarBorder = true
+baseRadius = "0.6rem"
+dataframeHeaderBackgroundColor = "#1A2038"
+greenColor = "#22C55E"
+redColor = "#F43F5E"
+orangeColor = "#F59E0B"
+blueColor = "#38BDF8"
+violetColor = "#A78BFA"
+grayColor = "#8B93A7"
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap, sans-serif"
+headingFont = "Rajdhani:https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap, sans-serif"
+headingFontWeights = 700
+codeFont = "JetBrains Mono:https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap, monospace"
+
+[theme.sidebar]
+backgroundColor = "#080A12"
+secondaryBackgroundColor = "#121629"
