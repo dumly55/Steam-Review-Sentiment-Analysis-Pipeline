@@ -29,11 +29,14 @@ st.markdown("""<style>
 [data-testid="stHeader"] {background: transparent;}
 h1 {background: linear-gradient(90deg, #22D3EE, #A78BFA 55%, #F472B6); -webkit-background-clip: text;
     background-clip: text; color: transparent !important; letter-spacing: .02em;}
+[data-testid="stMetric"] {background: rgba(21, 26, 46, .65);}
+[data-testid="stMetricValue"] {color: #22D3EE;}
 </style>""", unsafe_allow_html=True)
 state = st.session_state
 state.setdefault("selected", set())
 state.setdefault("editor_version", 0)
 
+st.sidebar.header("🎮 Data source")
 demo_mode = st.sidebar.toggle("Synthetic demo data", key="demo_mode",
                               help="Try the whole pipeline offline on an invented game. No Steam or Ollama needed.")
 APP_ID = demo.DEMO_APP_ID if demo_mode else settings.steam_app_id
@@ -55,7 +58,7 @@ if demo_mode:
     st.warning(SYNTHETIC_BANNER, icon="🧪")
 
 refresh_label = "Load / reset demo data" if demo_mode else "Load / refresh updates"
-if st.button(refresh_label, key="refresh"):
+if st.sidebar.button(refresh_label, key="refresh", icon=":material/sync:", width="stretch"):
     with st.spinner("Loading the synthetic demo..." if demo_mode else "Reading the full announcement history from Steam..."), \
             connect() as conn:
         if demo_mode:
@@ -75,13 +78,16 @@ except psycopg.Error as exc:
     st.stop()
 
 if catalog.refresh_id is None:
-    st.info(f"No release catalog yet. Click **{refresh_label}**.")
+    st.info(f"No release catalog yet. Click **{refresh_label}** in the sidebar.")
     st.stop()
 
-st.markdown(
-    f"Catalog last verified **{fmt(catalog.verified_through)}** · **{len(catalog.entries)}** releases "
-    f"from {catalog.events_seen} announcements"
-)
+st.sidebar.caption(f"Catalog last verified {fmt(catalog.verified_through)}. Refresh to pick up new updates.")
+stats = st.columns(4)
+stats[0].metric("Releases", len(catalog.entries), border=True)
+stats[1].metric("Announcements read", catalog.events_seen, border=True)
+stats[2].metric("Updates analyzed", len(run_status), border=True)
+stats[3].metric("Catalog verified", fmt(catalog.verified_through)[:10], help=fmt(catalog.verified_through),
+                border=True)
 if catalog.coverage_warning:
     st.warning(catalog.coverage_warning)
 
@@ -112,13 +118,14 @@ for entry in reversed(catalog.entries):  # newest first
 table = pd.DataFrame(rows).set_index("update_id")
 all_ids = set(table.index)
 
-left, middle, _ = st.columns([1, 1, 5])
-if left.button("Select all", key="select_all"):
-    reset_editor(set(all_ids))
-    st.rerun()
-if middle.button("Clear selection", key="clear"):
-    reset_editor(set())
-    st.rerun()
+st.header("Updates")
+with st.container(horizontal=True):
+    if st.button("Select all", key="select_all", icon=":material/done_all:"):
+        reset_editor(set(all_ids))
+        st.rerun()
+    if st.button("Clear selection", key="clear", icon=":material/close:"):
+        reset_editor(set())
+        st.rerun()
 
 edited = st.data_editor(
     table,
@@ -140,11 +147,14 @@ state.selected = set(edited.index[edited["Select"]]) & all_ids
 
 count = len(state.selected)
 scope = " (every update in the loaded catalog)" if count == len(all_ids) else ""
-st.markdown(f"**{count} of {len(all_ids)}** updates selected{scope}")
+with st.container(horizontal=True, vertical_alignment="center"):
+    run_clicked = st.button("Run analysis", key="run", type="primary", icon=":material/play_arrow:",
+                            disabled=count == 0 or busy)
+    st.markdown(f"**{count} of {len(all_ids)}** updates selected{scope}")
 if busy:
     st.info("A run is being processed in the background. Start another one when it finishes.")
 
-if st.button("Run analysis", key="run", type="primary", disabled=count == 0 or busy):
+if run_clicked:
     with st.spinner("Refreshing the catalog and freezing feedback windows..."), connect() as conn:
         if demo_mode:
             refresh, analysis = (lambda: demo.refresh_demo_catalog(conn)), demo.demo_analysis(settings)
