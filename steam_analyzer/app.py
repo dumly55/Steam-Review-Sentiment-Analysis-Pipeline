@@ -18,6 +18,13 @@ settings = load_settings()
 WINDOW_LABELS = {"closed": "Closed", "ongoing": "Ongoing", "uncertain": "Uncertain"}
 TIME_SOURCE_LABELS = {"announcement_published": "Announcement post", "manual_override": "Manual correction",
                       "missing": "Missing"}
+LABEL_COLORS = {"Positive": "green", "Negative": "red", "Mixed": "orange"}  # anything else is grey
+
+
+def badge(label: str) -> str:
+    return f":{LABEL_COLORS.get(label, 'gray')}-badge[{label}]"
+
+
 SYNTHETIC_BANNER = ("**SYNTHETIC DEMO DATA.** An invented game with invented reviews and comments, analyzed by a "
                     "script instead of a model. Nothing shown here is a real finding.")
 
@@ -307,8 +314,8 @@ def show_run(run_id: int, was_active: bool = False) -> None:
             st.markdown(f"#### {u['title']}")
             end = "ongoing" if u["window_status"] == "ongoing" else fmt(u["window_end"])
             st.caption(f"Feedback window {fmt(u['window_start'])} → {end} · results as of {fmt(u['as_of'])}")
-            st.markdown(f"**Overall reception among analyzed authors: {u['overall_label']}**"
-                        + (f" ({u['basis']})" if u["basis"] else ""))
+            st.markdown(f"**Overall reception among analyzed authors** {badge(u['overall_label'])}"
+                        + (f" · {u['basis']}" if u["basis"] else ""))
             for caveat in u["caveats"]:
                 st.caption(f"⚠️ {caveat}")
             if sources:

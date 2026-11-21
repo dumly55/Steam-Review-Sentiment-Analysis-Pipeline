@@ -98,7 +98,7 @@ def test_results_preview_shows_labels_counts_and_denominators(app):
     assert not at.exception
     assert f"Run #{run_id} · completed" in [s.value for s in at.subheader]
     markdown = " ".join(m.value for m in at.markdown)
-    assert "Overall reception among analyzed authors: Insufficient feedback" in markdown
+    assert "Overall reception among analyzed authors** :gray-badge[Insufficient feedback]" in markdown
     reasons = next(d.value for d in at.dataframe if "Feature" in d.value.columns)
     assert reasons.iloc[0]["Authors"] == "1 of 1 analyzed authors (100%)"
     assert reasons.iloc[0]["Example"] == "The new update broke matchmaking"
