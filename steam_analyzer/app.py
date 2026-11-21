@@ -139,7 +139,7 @@ edited = st.data_editor(
     key=f"catalog_editor_{state.editor_version}",
     hide_index=True,
     width="stretch",
-    height=420,
+    height=420 if len(table) > 10 else "auto",  # short catalogs (the demo) without empty rows
     disabled=[c for c in table.columns if c != "Select"],
     column_config={
         "Select": st.column_config.CheckboxColumn("Select", width="small"),
@@ -298,7 +298,7 @@ def show_run(run_id: int, was_active: bool = False) -> None:
     st.caption(f"Cutoff {fmt(run['cutoff_at'])} · model {run['model']} · created {fmt(run['created_at'])}"
                + (f" · finished {fmt(run['finished_at'])}" if run["finished_at"] else ""))
     if run["is_synthetic"]:
-        st.warning(SYNTHETIC_BANNER)
+        st.warning(SYNTHETIC_BANNER, icon="🧪")
     if run["max_items"] is not None:
         st.warning(f"Capped at {run['max_items']} items per source: collection is incomplete, so no source "
                    "can receive a reception label.")
